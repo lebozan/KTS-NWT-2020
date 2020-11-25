@@ -20,7 +20,7 @@ public class CulturalOffer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String address;
+    private String id;
 
     @Column(nullable=false)
     private String name;
@@ -34,6 +34,7 @@ public class CulturalOffer {
     @Column(nullable=false)
     private String description;
 
+    // Stavili smo da Cultural Offer ima podtip kao svoj atribut umesto da se unutar podtipa nalazi kolekcija svih offera koji joj pripadaju
     @Column(nullable=false)
     private CulturalOfferSubType subtype;
 
