@@ -5,8 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor()
@@ -14,8 +17,15 @@ import java.util.Collection;
 @Entity
 public class RegisteredUser extends User{
 
-    private Collection<Integer> subscriptions;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "UserSubscriptions",
+            joinColumns = { @JoinColumn(name = "userId")},
+            inverseJoinColumns = { @JoinColumn(name = "")}
+    )
+    private Set<CulturalOffer> subscriptions;
 
+    @Column
     private boolean active;
 
 
