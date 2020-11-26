@@ -17,12 +17,8 @@ import java.util.Set;
 @Entity
 public class RegisteredUser extends User{
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "UserSubscriptions",
-            joinColumns = { @JoinColumn(name = "userId")},
-            inverseJoinColumns = { @JoinColumn(name = "")}
-    )
+    @ManyToMany()
+    // da li treba zbog ove anotacije da CulturalOffer ima listu korisnika ili da to samo bude posebna join tabela?
     private Set<CulturalOffer> subscriptions;
 
     @Column

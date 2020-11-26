@@ -31,6 +31,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    // Ovako je napisano samo dok ne ubacimo spring security sledece nedelje
     @Column
     private Role role;
 

@@ -3,6 +3,7 @@ package com.ktsnwt.Culturalcontentapp.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyToOne;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,8 +26,11 @@ public class Rating {
     @Column
     private String comment;
 
+
+    // da li slika ipak treba biti klasa pa da se sa ManyToMany povezu slike sa ocenom kojoj pripadaju
     private Set<String> images;
 
-    private Long userId;
+    @OneToOne
+    private User userId;
     
 }
