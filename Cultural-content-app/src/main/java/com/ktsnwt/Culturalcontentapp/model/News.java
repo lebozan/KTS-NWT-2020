@@ -26,7 +26,7 @@ public class News {
     private Date dateCreated;
 
     @OneToOne
-    private CulturalOffer culturalOfferId;
+    private CulturalOffer culturalOffer;
 
     @Column
     private String image;

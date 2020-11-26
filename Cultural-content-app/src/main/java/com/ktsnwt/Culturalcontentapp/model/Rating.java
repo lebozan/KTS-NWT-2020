@@ -28,7 +28,8 @@ public class Rating {
 
 
     // da li slika ipak treba biti klasa pa da se sa ManyToMany povezu slike sa ocenom kojoj pripadaju
-    private Set<String> images;
+    @OneToMany
+    private Set<Image> images;
 
     @OneToOne
     private User userId;
