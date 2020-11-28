@@ -14,13 +14,16 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long imageId;
+    private Long id;
 
     @Column
     private String addressURL;
 
-    @Column
+
     @OneToOne
     private Rating rating;
+
+    @OneToOne
+    private News news;
 
 }

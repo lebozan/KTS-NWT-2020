@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,7 +26,7 @@ public class News {
     @OneToOne
     private CulturalOffer culturalOffer;
 
-    @Column
-    private String image;
+    @OneToMany
+    private Set<Image> images;
     
 }

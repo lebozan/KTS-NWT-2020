@@ -11,13 +11,16 @@ import javax.persistence.*;
 @AllArgsConstructor()
 @Data
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name = "registered_user")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("Admin")
 public class User {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
     @Column(nullable = false)
     private String firstName;
@@ -31,7 +34,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    // Ovako je napisano samo dok ne ubacimo spring security sledece nedelje
     @Column
     private Role role;
 

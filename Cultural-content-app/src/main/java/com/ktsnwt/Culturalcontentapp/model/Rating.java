@@ -18,7 +18,7 @@ public class Rating {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private Long ratingId;
+    private Long id;
 
     @Column(nullable = false)
     private float rating;
@@ -26,12 +26,10 @@ public class Rating {
     @Column
     private String comment;
 
-
-    // da li slika ipak treba biti klasa pa da se sa ManyToMany povezu slike sa ocenom kojoj pripadaju
     @OneToMany
     private Set<Image> images;
 
-    @OneToOne
-    private User userId;
+    @OneToOne()
+    private User user;
     
 }

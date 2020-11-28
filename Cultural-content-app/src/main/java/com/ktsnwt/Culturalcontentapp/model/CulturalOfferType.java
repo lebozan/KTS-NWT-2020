@@ -1,12 +1,9 @@
 package com.ktsnwt.Culturalcontentapp.model;
 
 import java.util.Collection;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,11 +17,12 @@ public class CulturalOfferType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     
     @Column(nullable=false)
     private String name;
 
-    @Column(nullable = false)
-    private Collection<CulturalOfferSubType> subtypes;
+
+    @OneToMany
+    private Set<CulturalOfferSubType> subtypes;
 }

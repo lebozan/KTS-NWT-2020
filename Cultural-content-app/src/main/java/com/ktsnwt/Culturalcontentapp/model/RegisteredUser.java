@@ -15,10 +15,14 @@ import java.util.Set;
 @AllArgsConstructor()
 @Data
 @Entity
+@DiscriminatorValue("User")
 public class RegisteredUser extends User{
 
     @ManyToMany()
-    // da li treba zbog ove anotacije da CulturalOffer ima listu korisnika ili da to samo bude posebna join tabela?
+    @JoinTable( name = "user_subscriptions",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "cultural_offer_id", referencedColumnName = "id")
+    )
     private Set<CulturalOffer> subscriptions;
 
     @Column
