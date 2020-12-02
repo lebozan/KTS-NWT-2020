@@ -19,10 +19,14 @@ public class CulturalOfferType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable=false)
+    @Column(nullable=false, unique = true)
     private String name;
 
 
     @OneToMany
     private Set<CulturalOfferSubType> subtypes;
+
+    public CulturalOfferType(String name) {
+        this.name = name;
+    }
 }
