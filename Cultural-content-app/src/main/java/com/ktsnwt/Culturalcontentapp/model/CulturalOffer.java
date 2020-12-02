@@ -1,7 +1,5 @@
 package com.ktsnwt.Culturalcontentapp.model;
 
-import java.util.Collection;
-
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -32,7 +30,7 @@ public class CulturalOffer {
 
     // Stavili smo da Cultural Offer ima podtip kao svoj atribut umesto da se unutar podtipa nalazi kolekcija svih offera koji joj pripadaju
     @OneToOne
-    private CulturalOfferSubType subtype;
+    private CulturalOfferSubtype subtype;
 
 //    private Collection<Rating> ratings;
 //

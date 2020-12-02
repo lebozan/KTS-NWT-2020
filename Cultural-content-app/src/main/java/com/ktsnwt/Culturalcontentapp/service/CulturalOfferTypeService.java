@@ -25,7 +25,9 @@ public class CulturalOfferTypeService {
         return culturalOfferTypeRepository.findById(id);
     }
 
-    public CulturalOfferType findByName(String name) { return culturalOfferTypeRepository.findByName(name); }
+    public CulturalOfferType findByName(String name) {
+        return culturalOfferTypeRepository.findByName(name);
+    }
 
     public CulturalOfferType create(CulturalOfferType newType) throws Exception {
         if (culturalOfferTypeRepository.findByName(newType.getName()) != null) {

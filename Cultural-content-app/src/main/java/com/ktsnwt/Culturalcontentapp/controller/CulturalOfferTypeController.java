@@ -1,9 +1,7 @@
 package com.ktsnwt.Culturalcontentapp.controller;
 
-import com.ktsnwt.Culturalcontentapp.dto.CulturalOfferDTO;
 import com.ktsnwt.Culturalcontentapp.dto.CulturalOfferTypeDTO;
 import com.ktsnwt.Culturalcontentapp.helper.CulturalOfferTypeMapper;
-import com.ktsnwt.Culturalcontentapp.model.CulturalOffer;
 import com.ktsnwt.Culturalcontentapp.model.CulturalOfferType;
 import com.ktsnwt.Culturalcontentapp.service.CulturalOfferTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +20,10 @@ public class CulturalOfferTypeController {
     @Autowired
     CulturalOfferTypeService culturalOfferTypeService;
 
-    private CulturalOfferTypeMapper culturalOfferTypeMapper;
+    private final CulturalOfferTypeMapper culturalOfferTypeMapper;
 
     public CulturalOfferTypeController() {
-        this.culturalOfferTypeMapper = new CulturalOfferTypeMapper();
+        culturalOfferTypeMapper = new CulturalOfferTypeMapper();
     }
 
 
