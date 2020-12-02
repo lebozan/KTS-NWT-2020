@@ -8,11 +8,11 @@ INSERT into cultural_offer_type (id,name) values (2,'Manifestacija');
 INSERT into cultural_offer_type (id,name) values (3,'Kulturno dobro');
 
 
-INSERT into cultural_offer_sub_type(id, name, type_id) VALUES (1, 'Muzej', 1);
-INSERT into cultural_offer_sub_type(id, name, type_id) VALUES (2, 'Galerija', 1);
-INSERT into cultural_offer_sub_type(id, name, type_id) VALUES (3, 'Festival', 2);
-INSERT into cultural_offer_sub_type(id, name, type_id) VALUES (4, 'Sajam', 2);
-INSERT into cultural_offer_sub_type(id, name, type_id) VALUES (5, 'Spomenik', 2);
+INSERT into cultural_offer_subtype(id, name, type_id) VALUES (1, 'Muzej', 1);
+INSERT into cultural_offer_subtype(id, name, type_id) VALUES (2, 'Galerija', 1);
+INSERT into cultural_offer_subtype(id, name, type_id) VALUES (3, 'Festival', 2);
+INSERT into cultural_offer_subtype(id, name, type_id) VALUES (4, 'Sajam', 2);
+INSERT into cultural_offer_subtype(id, name, type_id) VALUES (5, 'Spomenik', 2);
 
 
 

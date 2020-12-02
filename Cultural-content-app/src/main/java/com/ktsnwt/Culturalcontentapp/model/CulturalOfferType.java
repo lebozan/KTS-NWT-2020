@@ -1,6 +1,5 @@
 package com.ktsnwt.Culturalcontentapp.model;
 
-import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -24,7 +23,7 @@ public class CulturalOfferType {
 
 
     @OneToMany
-    private Set<CulturalOfferSubType> subtypes;
+    private Set<CulturalOfferSubtype> subtypes;
 
     public CulturalOfferType(String name) {
         this.name = name;
