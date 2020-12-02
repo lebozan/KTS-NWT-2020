@@ -56,6 +56,7 @@ public class CulturalOfferSubtypeController {
         CulturalOfferSubtype newCulturalOfferSubtype;
         try {
             newCulturalOfferSubtype = culturalOfferSubtypeMapper.toEntity(culturalOfferSubtypeDTO);
+            newCulturalOfferSubtype.setType(culturalOfferTypeService.findByName(culturalOfferSubtypeDTO.getType().getName()));
             newCulturalOfferSubtype = culturalOfferSubtypeService.create(newCulturalOfferSubtype);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
