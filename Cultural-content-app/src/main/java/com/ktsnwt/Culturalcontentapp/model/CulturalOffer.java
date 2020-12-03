@@ -1,5 +1,8 @@
 package com.ktsnwt.Culturalcontentapp.model;
 
+
+import java.util.Set;
+
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -12,7 +15,14 @@ import lombok.NoArgsConstructor;
 @Entity
 public class CulturalOffer {
 
-    @Id
+    public CulturalOffer(String name2, Set<Image> images2, Location location2, String description2) {
+        this.name = name2;
+        this.images = images2;
+        this.location = location2;
+        this.description = description2;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -20,19 +30,21 @@ public class CulturalOffer {
     private String name;
 
     @Column(nullable=false)
-    private String image;
+    @OneToMany
+    private Set<Image> images;
 
     @OneToOne
     private Location location;
 
     @Column(nullable=false)
     private String description;
-
-    // Stavili smo da Cultural Offer ima podtip kao svoj atribut umesto da se unutar podtipa nalazi kolekcija svih offera koji joj pripadaju
+    
     @OneToOne
     private CulturalOfferSubtype subtype;
 
-//    private Collection<Rating> ratings;
-//
-//    private Collection<News> news;
+    @OneToMany
+    private Set<Rating> ratings;
+
+    @OneToMany
+    private Set<News> news;
 }
