@@ -20,6 +20,15 @@ INSERT into cultural_offer_subtype(id, name, type_id) VALUES (104, 'Sajam', 101)
 -- INSERT into cultural_offer_subtype(id, name, type_id) VALUES (105, 'Spomenik', 103);
 
 
+INSERT into rating(id, comment, rating_value, user_id) VALUES (100, 'Dobar komentar', 4, 1000);
+INSERT into rating(id, comment, rating_value, user_id) VALUES (101, 'Los komentar', 2, 1000);
+INSERT into rating(id, comment, rating_value, user_id) VALUES (102, 'Dobar komentar', 3.5, 1001);
+--
+INSERT into cultural_offer(id, description, name, location_id, subtype_id) VALUES (100, 'Opis', 'Festival čokolade', null, 103);
+INSERT into cultural_offer(id, description, name, location_id, subtype_id) VALUES (101, 'Opis', 'Sajam poljoprivrede', null, 104);
+INSERT into cultural_offer(id, description, name, location_id, subtype_id) VALUES (102, 'Opis', 'Galerija Milene Pavlovic Barili', null, 102);
 
+INSERT into cultural_offer_ratings(cultural_offer_id, ratings_id) VALUES (100, 100);
+INSERT into cultural_offer_ratings(cultural_offer_id, ratings_id) VALUES (102, 101);
 
 
