@@ -3,10 +3,8 @@ package com.ktsnwt.Culturalcontentapp.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.LazyToOne;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.Set;
 
 
@@ -29,7 +27,7 @@ public class Rating {
     @OneToMany
     private Set<Image> images;
 
-    @OneToOne()
+    @OneToOne
     private User user;
     
 }
