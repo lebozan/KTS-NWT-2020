@@ -14,7 +14,14 @@ import lombok.NoArgsConstructor;
 @Entity
 public class CulturalOffer {
 
-    @Id
+    public CulturalOffer(String name2, Set<Image> images2, Location location2, String description2) {
+        this.name = name2;
+        this.images = images2;
+        this.location = location2;
+        this.description = description2;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
