@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @Entity
-public class CulturalOfferSubType {
+public class CulturalOfferSubtype {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,5 +21,14 @@ public class CulturalOfferSubType {
 
     @OneToOne
     private CulturalOfferType type;
-    
+
+
+    public CulturalOfferSubtype(String name) {
+        this.name = name;
+    }
+
+    public CulturalOfferSubtype(String name, CulturalOfferType culturalOfferType) {
+        this.name = name;
+        this.type = culturalOfferType;
+    }
 }

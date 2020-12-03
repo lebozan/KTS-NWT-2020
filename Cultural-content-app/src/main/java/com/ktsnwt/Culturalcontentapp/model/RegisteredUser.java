@@ -29,5 +29,15 @@ public class RegisteredUser extends User{
     private boolean active;
 
 
+    public RegisteredUser(Long id, String firstName, String lastName, String email, String password) {
+        this.setId(id);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setEmail(email);
+        this.setPassword(password);
+        this.setRole(Role.REGISTERED_USER);
+        this.active = false;
+        this.subscriptions = null;
 
+    }
 }

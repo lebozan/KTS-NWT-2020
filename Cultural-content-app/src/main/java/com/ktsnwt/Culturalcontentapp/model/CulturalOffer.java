@@ -1,5 +1,6 @@
 package com.ktsnwt.Culturalcontentapp.model;
 
+
 import java.util.Set;
 
 import javax.persistence.*;
@@ -39,7 +40,7 @@ public class CulturalOffer {
     private String description;
     
     @OneToOne
-    private CulturalOfferSubType subtype;
+    private CulturalOfferSubtype subtype;
 
     @OneToMany
     private Set<Rating> ratings;
