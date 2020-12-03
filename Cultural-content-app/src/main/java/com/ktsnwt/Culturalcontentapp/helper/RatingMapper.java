@@ -13,9 +13,7 @@ import java.util.List;
 public class RatingMapper implements MapperInterface<Rating, RatingDTO> {
     @Override
     public Rating toEntity(RatingDTO dto) {
-        return new Rating(null, dto.getRating(), dto.getComment(), null,
-                new RegisteredUser(null,dto.getUser().getFirstName(), dto.getUser().getLastName(),
-                        dto.getUser().getEmail(), dto.getUser().getPassword()));
+        return new Rating(null, dto.getRatingValue(), dto.getComment(), null, null);
     }
 
     @Override
@@ -25,7 +23,7 @@ public class RatingMapper implements MapperInterface<Rating, RatingDTO> {
             images.add(i.getAddressURL());
         }
 
-        return new RatingDTO(entity.getRating(), entity.getComment(), images,
+        return new RatingDTO(entity.getRatingValue(), entity.getComment(), images,
                 new UserDTO(entity.getUser().getFirstName(), entity.getUser().getLastName(), entity.getUser().getEmail(),
                         entity.getUser().getPassword(), entity.getUser().getRole()));
     }

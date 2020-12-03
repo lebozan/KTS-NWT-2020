@@ -29,9 +29,9 @@ public class RatingService {
 
 
     public Rating create(Rating newRating) throws Exception {
-//        if (ratingRepository.findById(newRating.getId()) != null) {
-//            throw new Exception("Rating with given id already exists!");
-//        }
+        if (ratingRepository.findById(newRating.getId()).isPresent()) {
+            throw new Exception("Rating with given id already exists!");
+        }
 
         return ratingRepository.save(newRating);
     }
@@ -39,22 +39,12 @@ public class RatingService {
     public void update(Long id, RatingDTO updateDTO) throws Exception {
         Optional<Rating> existingRating = ratingRepository.findById(id);
         if (existingRating.isEmpty()) {
-            throw new Exception("User with given id doesn't exist!");
+            throw new Exception("Rating with given id doesn't exist!");
         }
         Rating rating = existingRating.get();
 
-//        if (updateDTO.getEmail() != null) {
-//            user.setEmail(updateDTO.getEmail());
-//        }
-//        if (updateDTO.getFirstName() != null) {
-//            user.setFirstName(updateDTO.getFirstName());
-//        }
-//        if (updateDTO.getLastName() != null ) {
-//            user.setLastName(updateDTO.getLastName());
-//        }
-//        if (updateDTO.getPassword() != null) {
-//            user.setPassword(updateDTO.getPassword());
-//        }
+        rating.setComment(updateDTO.getComment());
+        rating.setRatingValue(updateDTO.getRatingValue());
 
 
         ratingRepository.save(rating);
@@ -64,7 +54,7 @@ public class RatingService {
     public void delete(Long id) throws Exception {
         Optional<Rating> existingRating = ratingRepository.findById(id);
         if (existingRating.isEmpty()) {
-            throw new Exception("User with given id doesn't exist!");
+            throw new Exception("Rating with given id doesn't exist!");
         }
 
         ratingRepository.delete(existingRating.get());

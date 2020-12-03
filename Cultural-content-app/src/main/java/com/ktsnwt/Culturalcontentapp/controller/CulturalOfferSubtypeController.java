@@ -30,6 +30,7 @@ public class CulturalOfferSubtypeController {
         culturalOfferSubtypeMapper = new CulturalOfferSubtypeMapper();
     }
 
+    // http://localhost:8080/api/cultural-offer-subtypes
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CulturalOfferSubtypeDTO>> getAllCulturalOfferSubtypes() {
         List<CulturalOfferSubtype> culturalOfferSubtypes = culturalOfferSubtypeService.findAll();
@@ -41,6 +42,7 @@ public class CulturalOfferSubtypeController {
         return new ResponseEntity<>(culturalOfferSubtypeDTOS, HttpStatus.OK);
     }
 
+    // http://localhost:8080/api/cultural-offer-subtypes/Muzej
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     public ResponseEntity<CulturalOfferSubtypeDTO> getCulturalOfferSubtype(@PathVariable String name) {
         CulturalOfferSubtype culturalOfferSubtype = culturalOfferSubtypeService.findByName(name);
@@ -50,7 +52,13 @@ public class CulturalOfferSubtypeController {
         return new ResponseEntity<>(culturalOfferSubtypeMapper.toDto(culturalOfferSubtype), HttpStatus.OK);
     }
 
-
+    // http://localhost:8080/api/cultural-offer-subtypes/create
+    //{
+    //    "name": "Podtip",
+    //    "type": {
+    //        "name": "Institucija"
+    //    }
+    //}
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CulturalOfferSubtypeDTO> createCulturalOfferSubtype(@RequestBody CulturalOfferSubtypeDTO culturalOfferSubtypeDTO) {
         CulturalOfferSubtype newCulturalOfferSubtype;
@@ -65,6 +73,8 @@ public class CulturalOfferSubtypeController {
         return new ResponseEntity<>(culturalOfferSubtypeMapper.toDto(newCulturalOfferSubtype), HttpStatus.OK);
     }
 
+    // http://localhost:8080/api/cultural-offer-subtypes/Muzej
+    //
     @RequestMapping(value = "/{name}", method = RequestMethod.PUT)
     public ResponseEntity<CulturalOfferSubtypeDTO> updateCulturalOfferSubtype(@RequestBody CulturalOfferSubtypeDTO culturalOfferSubtypeDTO,
                                                                         @PathVariable String name) {
@@ -81,6 +91,7 @@ public class CulturalOfferSubtypeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // http://localhost:8080/api/cultural-offer-subtypes/Muzej
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteCulturalOfferSubtype(@PathVariable String name) {
         CulturalOfferSubtype culturalOfferSubtype = culturalOfferSubtypeService.findByName(name);

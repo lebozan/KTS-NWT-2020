@@ -28,7 +28,7 @@ public class UserController {
         userMapper = new UserMapper();
     }
 
-
+    // http://localhost:8080/api/users
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<User> users = userService.findAllUsers();
@@ -40,6 +40,7 @@ public class UserController {
         return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
 
+    // http://localhost:8080/api/users/
     @RequestMapping(value = "/{email}", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> getUser(@PathVariable String email) {
         User user = userService.findByEmail(email);
@@ -78,6 +79,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         Optional<User> optionalUser = userService.findById(id);

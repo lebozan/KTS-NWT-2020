@@ -19,7 +19,7 @@ public class Rating {
     private Long id;
 
     @Column(nullable = false)
-    private float rating;
+    private float ratingValue;
 
     @Column
     private String comment;

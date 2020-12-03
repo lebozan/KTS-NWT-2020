@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class RatingDTO {
 
-    private float rating;
+    private float ratingValue;
 
     private String comment;
 
