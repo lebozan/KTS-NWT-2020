@@ -1,6 +1,6 @@
 package com.ktsnwt.Culturalcontentapp.model;
 
-import java.util.Collection;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -22,19 +22,21 @@ public class CulturalOffer {
     private String name;
 
     @Column(nullable=false)
-    private String image;
+    @OneToMany
+    private Set<Image> images;
 
     @OneToOne
     private Location location;
 
     @Column(nullable=false)
     private String description;
-
-    // Stavili smo da Cultural Offer ima podtip kao svoj atribut umesto da se unutar podtipa nalazi kolekcija svih offera koji joj pripadaju
+    
     @OneToOne
     private CulturalOfferSubType subtype;
 
-//    private Collection<Rating> ratings;
-//
-//    private Collection<News> news;
+    @OneToMany
+    private Set<Rating> ratings;
+
+    @OneToMany
+    private Set<News> news;
 }
