@@ -10,9 +10,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class CulturalOfferSubtypeDTO {
 
+    private Long id;
     private String name;
-
     private CulturalOfferTypeDTO type;
 
-    
 }

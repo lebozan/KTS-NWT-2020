@@ -29,15 +29,16 @@ public class RegisteredUser extends User{
     private boolean active;
 
 
-    public RegisteredUser(Long id, String firstName, String lastName, String email, String password) {
-        this.setId(id);
-        this.setFirstName(firstName);
-        this.setLastName(lastName);
-        this.setEmail(email);
-        this.setPassword(password);
-        this.setRole(Role.REGISTERED_USER);
+    public RegisteredUser(Long id, String firstName, String lastName, String email) {
+        super(id, firstName, lastName, email);
         this.active = false;
         this.subscriptions = null;
 
+    }
+
+    public RegisteredUser(String firstName, String lastName, String email, String password) {
+        super(firstName, lastName, email, password, Role.REGISTERED_USER);
+        this.active = false;
+        this.subscriptions = null;
     }
 }

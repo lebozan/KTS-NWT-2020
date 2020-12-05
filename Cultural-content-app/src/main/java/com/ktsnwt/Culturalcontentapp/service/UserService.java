@@ -27,8 +27,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public List<User> findAllUsers() {
-        return userRepository.findAllByRole(Role.REGISTERED_USER);
+    public Page<User> findAllUsers(Pageable pageable) {
+        return userRepository.findAllByRole(pageable, Role.REGISTERED_USER);
     }
 
     public Optional<User> findById(Long id) {
@@ -63,10 +63,6 @@ public class UserService {
         if (updateDTO.getLastName() != null ) {
             user.setLastName(updateDTO.getLastName());
         }
-        if (updateDTO.getPassword() != null) {
-            user.setPassword(updateDTO.getPassword());
-        }
-        
 
         userRepository.save(user);
     }

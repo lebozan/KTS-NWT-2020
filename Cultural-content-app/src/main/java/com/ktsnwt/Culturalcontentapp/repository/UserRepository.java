@@ -20,6 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByFirstNameAndLastName(String firstName, String lastName);
 
-    List<User> findAllByRole(Role role);
+    Page<User> findAllByRole(Pageable pageable, Role role);
 
 }

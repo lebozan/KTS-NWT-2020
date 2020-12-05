@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/cultural-offer-types")
@@ -38,18 +40,19 @@ public class CulturalOfferTypeController {
         return new ResponseEntity<>(culturalOfferTypeDTOS, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    public ResponseEntity<CulturalOfferTypeDTO> getCulturalOfferType(@PathVariable String name) {
-        CulturalOfferType culturalOfferType = culturalOfferTypeService.findByName(name);
-        if (culturalOfferType == null) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<CulturalOfferTypeDTO> getCulturalOfferType(@PathVariable Long id) {
+        Optional<CulturalOfferType> culturalOfferType = culturalOfferTypeService.findById(id);
+
+        if (culturalOfferType.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(culturalOfferTypeMapper.toDto(culturalOfferType), HttpStatus.OK);
+        return new ResponseEntity<>(culturalOfferTypeMapper.toDto(culturalOfferType.get()), HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CulturalOfferTypeDTO> createCulturalOfferType(@RequestBody CulturalOfferTypeDTO culturalOfferTypeDTO) {
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CulturalOfferTypeDTO> createCulturalOfferType(@RequestBody @Validated CulturalOfferTypeDTO culturalOfferTypeDTO) {
         CulturalOfferType newCulturalOfferType;
         try {
             newCulturalOfferType = culturalOfferTypeMapper.toEntity(culturalOfferTypeDTO);
@@ -61,15 +64,15 @@ public class CulturalOfferTypeController {
         return new ResponseEntity<>(this.culturalOfferTypeMapper.toDto(newCulturalOfferType), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{name}", method = RequestMethod.PUT)
-    public ResponseEntity<CulturalOfferTypeDTO> updateCulturalOfferType(@RequestBody CulturalOfferTypeDTO culturalOfferTypeDTO,
-                                                                        @PathVariable String name) {
-        CulturalOfferType culturalOfferType = culturalOfferTypeService.findByName(name);
-        if (culturalOfferType == null) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<CulturalOfferTypeDTO> updateCulturalOfferType(@RequestBody @Validated CulturalOfferTypeDTO culturalOfferTypeDTO,
+                                                                        @PathVariable Long id) {
+        Optional<CulturalOfferType> culturalOfferType = culturalOfferTypeService.findById(id);
+        if (culturalOfferType.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         try {
-            culturalOfferTypeService.update(culturalOfferType.getId(), culturalOfferTypeDTO);
+            culturalOfferTypeService.update(culturalOfferType.get().getId(), culturalOfferTypeDTO);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -77,12 +80,12 @@ public class CulturalOfferTypeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteCulturalOfferType(@PathVariable String name) {
-        CulturalOfferType culturalOfferType = culturalOfferTypeService.findByName(name);
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteCulturalOfferType(@PathVariable Long id) {
+        Optional<CulturalOfferType> culturalOfferType = culturalOfferTypeService.findById(id);
 
         try {
-            culturalOfferTypeService.delete(culturalOfferType.getId());
+            culturalOfferTypeService.delete(culturalOfferType.orElseThrow().getId());
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

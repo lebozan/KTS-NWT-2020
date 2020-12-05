@@ -7,6 +7,8 @@ import com.ktsnwt.Culturalcontentapp.model.Role;
 import com.ktsnwt.Culturalcontentapp.model.User;
 import com.ktsnwt.Culturalcontentapp.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +20,8 @@ public class RatingService {
     @Autowired
     private RatingRepository ratingRepository;
 
-    public List<Rating> findAll() {
-        return ratingRepository.findAll();
+    public Page<Rating> findAll(Pageable pageable) {
+        return ratingRepository.findAll(pageable);
     }
 
 
@@ -29,9 +31,9 @@ public class RatingService {
 
 
     public Rating create(Rating newRating) throws Exception {
-        if (ratingRepository.findById(newRating.getId()).isPresent()) {
-            throw new Exception("Rating with given id already exists!");
-        }
+//        if (ratingRepository.findById(newRating.getId()).isPresent()) {
+//            throw new Exception("Rating with given id already exists!");
+//        }
 
         return ratingRepository.save(newRating);
     }

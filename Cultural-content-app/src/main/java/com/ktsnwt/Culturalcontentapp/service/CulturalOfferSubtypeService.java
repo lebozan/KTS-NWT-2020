@@ -2,8 +2,11 @@ package com.ktsnwt.Culturalcontentapp.service;
 
 import com.ktsnwt.Culturalcontentapp.dto.CulturalOfferSubtypeDTO;
 import com.ktsnwt.Culturalcontentapp.model.CulturalOfferSubtype;
+import com.ktsnwt.Culturalcontentapp.model.CulturalOfferType;
 import com.ktsnwt.Culturalcontentapp.repository.CulturalOfferSubtypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +18,8 @@ public class CulturalOfferSubtypeService {
     @Autowired
     private CulturalOfferSubtypeRepository culturalOfferSubtypeRepository;
 
-    public List<CulturalOfferSubtype> findAll() {
-        return culturalOfferSubtypeRepository.findAll();
+    public Page<CulturalOfferSubtype> findAll(Pageable pageable) {
+        return culturalOfferSubtypeRepository.findAll(pageable);
     }
 
     public Optional<CulturalOfferSubtype> findOne(Long id) {
@@ -26,6 +29,11 @@ public class CulturalOfferSubtypeService {
     public CulturalOfferSubtype findByName(String name) {
         return culturalOfferSubtypeRepository.findByName(name);
     }
+
+    public Optional<CulturalOfferSubtype> findById(Long id) {
+        return culturalOfferSubtypeRepository.findById(id);
+    }
+
 
     public CulturalOfferSubtype create(CulturalOfferSubtype newSubtype) throws Exception {
         if (culturalOfferSubtypeRepository.findByName(newSubtype.getName()) != null) {

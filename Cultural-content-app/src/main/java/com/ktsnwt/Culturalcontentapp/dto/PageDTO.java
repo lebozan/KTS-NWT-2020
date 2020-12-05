@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class CulturalOfferTypeDTO {
+public class PageDTO {
 
-    private Long id;
-    private String name;
-    
+    private int pageNumber;
+
+    private int pageSize;
 }

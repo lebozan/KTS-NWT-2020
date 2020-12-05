@@ -11,6 +11,8 @@ import java.util.List;
 @Data
 public class RatingDTO {
 
+    private Long id;
+
     private float ratingValue;
 
     private String comment;
