@@ -29,5 +29,9 @@ public class Rating {
 
     @OneToOne
     private User user;
-    
+
+    public Rating(float ratingValue, String comment) {
+        this.ratingValue = ratingValue;
+        this.comment = comment;
+    }
 }

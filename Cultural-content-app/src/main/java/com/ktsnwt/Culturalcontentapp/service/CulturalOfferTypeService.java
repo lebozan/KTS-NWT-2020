@@ -29,6 +29,10 @@ public class CulturalOfferTypeService {
         return culturalOfferTypeRepository.findByName(name);
     }
 
+    public Optional<CulturalOfferType> findById(Long id) {
+        return culturalOfferTypeRepository.findById(id);
+    }
+
     public CulturalOfferType create(CulturalOfferType newType) throws Exception {
         if (culturalOfferTypeRepository.findByName(newType.getName()) != null) {
             throw new Exception("Cultural category type with given name already exists!");

@@ -13,6 +13,7 @@ public class CulturalOfferSubtypeMapper implements MapperInterface<CulturalOffer
 
     @Override
     public CulturalOfferSubtypeDTO toDto(CulturalOfferSubtype entity) {
-        return new CulturalOfferSubtypeDTO(entity.getName(), new CulturalOfferTypeDTO(entity.getType().getName()));
+        return new CulturalOfferSubtypeDTO(entity.getId(), entity.getName(),
+                new CulturalOfferTypeDTO(entity.getType().getId(), entity.getType().getName()));
     }
 }

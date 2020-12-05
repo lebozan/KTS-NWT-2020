@@ -13,18 +13,20 @@ import java.util.List;
 public class RatingMapper implements MapperInterface<Rating, RatingDTO> {
     @Override
     public Rating toEntity(RatingDTO dto) {
-        return new Rating(null, dto.getRatingValue(), dto.getComment(), null, null);
+        return new Rating(dto.getRatingValue(), dto.getComment());
     }
 
     @Override
     public RatingDTO toDto(Rating entity) {
         List<String> images = new ArrayList<>();
-        for (Image i : entity.getImages()) {
-            images.add(i.getAddressURL());
+        if (entity.getImages() != null) {
+            for (Image i : entity.getImages()) {
+                images.add(i.getAddressURL());
+            }
         }
 
-        return new RatingDTO(entity.getRatingValue(), entity.getComment(), images,
-                new UserDTO(entity.getUser().getFirstName(), entity.getUser().getLastName(), entity.getUser().getEmail(),
-                        entity.getUser().getPassword(), entity.getUser().getRole()));
+        return new RatingDTO(entity.getId(), entity.getRatingValue(), entity.getComment(), images,
+                new UserDTO(entity.getUser().getId(), entity.getUser().getFirstName(), entity.getUser().getLastName(),
+                        entity.getUser().getEmail(), entity.getUser().getRole()));
     }
 }
