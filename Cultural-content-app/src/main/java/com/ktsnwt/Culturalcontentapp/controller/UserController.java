@@ -57,18 +57,18 @@ public class UserController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> createUser(@RequestBody @Valid RegisterDTO newUserDTO) {
-        User newUser;
-        try {
-            newUser = userMapper.toRegisterEntity(newUserDTO);
-            newUser = userService.create(newUser);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>(userMapper.toDto(newUser), HttpStatus.OK);
-    }
+//    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<UserDTO> createUser(@RequestBody @Valid RegisterDTO newUserDTO) {
+//        User newUser;
+//        try {
+//            newUser = userMapper.toRegisterEntity(newUserDTO);
+//            newUser = userService.create(newUser);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//
+//        return new ResponseEntity<>(userMapper.toDto(newUser), HttpStatus.OK);
+//    }
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
