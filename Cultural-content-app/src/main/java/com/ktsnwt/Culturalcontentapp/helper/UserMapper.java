@@ -13,7 +13,7 @@ public class UserMapper implements MapperInterface<User, UserDTO> {
 
     @Override
     public UserDTO toDto(User entity) {
-        return new UserDTO(entity.getId(), entity.getFirstName(), entity.getLastName(), entity.getEmail(), entity.getRole());
+        return new UserDTO(entity.getId(), entity.getFirstName(), entity.getLastName(), entity.getEmail());
     }
 
     public RegisteredUser toRegisterEntity(RegisterDTO registerDTO) {

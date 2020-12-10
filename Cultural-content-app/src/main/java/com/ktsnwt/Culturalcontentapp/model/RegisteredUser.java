@@ -36,8 +36,14 @@ public class RegisteredUser extends User{
 
     }
 
+    public RegisteredUser(String email, String password) {
+        super(email, password);
+        this.active = false;
+        this.subscriptions = null;
+    }
+
     public RegisteredUser(String firstName, String lastName, String email, String password) {
-        super(firstName, lastName, email, password, Role.REGISTERED_USER);
+        super(firstName, lastName, email, password);
         this.active = false;
         this.subscriptions = null;
     }

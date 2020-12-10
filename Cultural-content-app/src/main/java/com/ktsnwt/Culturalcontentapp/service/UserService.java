@@ -28,19 +28,19 @@ public class UserService {
     }
 
     public Page<User> findAllUsers(Pageable pageable) {
-        return userRepository.findAllByRole(pageable, Role.REGISTERED_USER);
+        return userRepository.findAll(pageable);
     }
 
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     public User create(User newUser) throws Exception {
-        if (userRepository.findByEmail(newUser.getEmail()) != null) {
+        if (userRepository.findByEmail(newUser.getEmail()).isPresent()) {
             throw new Exception("User with given email already exists!");
         }
 

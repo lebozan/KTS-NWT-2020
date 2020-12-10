@@ -27,6 +27,6 @@ public class RatingMapper implements MapperInterface<Rating, RatingDTO> {
 
         return new RatingDTO(entity.getId(), entity.getRatingValue(), entity.getComment(), images,
                 new UserDTO(entity.getUser().getId(), entity.getUser().getFirstName(), entity.getUser().getLastName(),
-                        entity.getUser().getEmail(), entity.getUser().getRole()));
+                        entity.getUser().getEmail()));
     }
 }

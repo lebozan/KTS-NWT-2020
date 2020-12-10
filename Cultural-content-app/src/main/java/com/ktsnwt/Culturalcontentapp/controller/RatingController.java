@@ -64,9 +64,9 @@ public class RatingController {
     public ResponseEntity<RatingDTO> createRating(@RequestBody @Valid RatingDTO ratingDTO) {
         Rating newRating;
         try {
-            User u = userService.findByEmail(ratingDTO.getUser().getEmail());
+            Optional<User> u = userService.findByEmail(ratingDTO.getUser().getEmail());
             newRating = ratingMapper.toEntity(ratingDTO);
-            newRating.setUser(u);
+            newRating.setUser(u.orElseThrow());
             newRating = ratingService.create(newRating);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
