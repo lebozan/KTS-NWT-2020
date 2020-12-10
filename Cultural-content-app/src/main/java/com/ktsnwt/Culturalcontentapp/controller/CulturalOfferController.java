@@ -25,7 +25,7 @@ public class CulturalOfferController {
     @Autowired
     CulturalOfferService culturalOfferService;
 
-    private CulturalOfferMapper culturalOfferMapper;
+    private final CulturalOfferMapper culturalOfferMapper;
 
     public CulturalOfferController() {
         this.culturalOfferMapper = new CulturalOfferMapper();
