@@ -14,7 +14,12 @@ import java.util.Set;
 @Entity
 public class News {
 
-    @Id
+    public News(String text2, Date dateCreated2) {
+        this.text = text2;
+        this.dateCreated = dateCreated2;
+	}
+
+	@Id
     private String title;
 
     @Column
