@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class UserController {
         userMapper = new UserMapper();
     }
 
-    // http://localhost:8080/api/users
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Page<UserDTO>> getAllUsers(@RequestBody PageDTO pageDTO) {
         Page<User> users = userService.findAllUsers(PageRequest.of(pageDTO.getPageNumber(), pageDTO.getPageSize()));
@@ -46,7 +47,7 @@ public class UserController {
         return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
 
-    // http://localhost:8080/api/users/1001
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
         Optional<User> user = userService.findById(id);
@@ -70,7 +71,7 @@ public class UserController {
 //        return new ResponseEntity<>(userMapper.toDto(newUser), HttpStatus.OK);
 //    }
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable Long id) {
         Optional<User> optionalUser = userService.findById(id);
@@ -86,7 +87,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // http://localhost:8080/api/users/1
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         Optional<User> optionalUser = userService.findById(id);

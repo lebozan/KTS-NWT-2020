@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,7 @@ public class CulturalOfferTypeController {
     }
 
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CulturalOfferTypeDTO>> getAllCulturalOfferTypes() {
         List<CulturalOfferType> culturalOfferTypes = culturalOfferTypeService.findAll();
@@ -40,6 +42,7 @@ public class CulturalOfferTypeController {
         return new ResponseEntity<>(culturalOfferTypeDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<CulturalOfferTypeDTO> getCulturalOfferType(@PathVariable Long id) {
         Optional<CulturalOfferType> culturalOfferType = culturalOfferTypeService.findById(id);
@@ -51,6 +54,7 @@ public class CulturalOfferTypeController {
     }
 
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CulturalOfferTypeDTO> createCulturalOfferType(@RequestBody @Validated CulturalOfferTypeDTO culturalOfferTypeDTO) {
         CulturalOfferType newCulturalOfferType;
@@ -64,6 +68,7 @@ public class CulturalOfferTypeController {
         return new ResponseEntity<>(this.culturalOfferTypeMapper.toDto(newCulturalOfferType), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<CulturalOfferTypeDTO> updateCulturalOfferType(@RequestBody @Validated CulturalOfferTypeDTO culturalOfferTypeDTO,
                                                                         @PathVariable Long id) {
@@ -80,6 +85,7 @@ public class CulturalOfferTypeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteCulturalOfferType(@PathVariable Long id) {
         Optional<CulturalOfferType> culturalOfferType = culturalOfferTypeService.findById(id);

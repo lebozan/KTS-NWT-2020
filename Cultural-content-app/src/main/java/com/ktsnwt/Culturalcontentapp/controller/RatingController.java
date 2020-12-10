@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +51,7 @@ public class RatingController {
     }
 
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<RatingDTO> getRating(@PathVariable Long id) {
         Optional<Rating> rating = ratingService.findById(id);
@@ -60,6 +62,7 @@ public class RatingController {
     }
 
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RatingDTO> createRating(@RequestBody @Valid RatingDTO ratingDTO) {
         Rating newRating;
@@ -76,6 +79,7 @@ public class RatingController {
     }
 
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<RatingDTO> updateRating(@RequestBody @Validated RatingDTO ratingDTO, @PathVariable Long id) {
         Optional<Rating> optionalRating = ratingService.findById(id);
@@ -92,6 +96,7 @@ public class RatingController {
     }
 
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteRating(@PathVariable Long id) {
         Optional<Rating> optionalRating = ratingService.findById(id);

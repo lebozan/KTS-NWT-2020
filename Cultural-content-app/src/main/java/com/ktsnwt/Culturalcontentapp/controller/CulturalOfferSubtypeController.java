@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,7 @@ public class CulturalOfferSubtypeController {
         culturalOfferSubtypeMapper = new CulturalOfferSubtypeMapper();
     }
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Page<CulturalOfferSubtypeDTO>> getAllCulturalOfferSubtypes(@RequestBody @Validated PageDTO pageDTO) {
         Page<CulturalOfferSubtype> culturalOfferSubtypes = culturalOfferSubtypeService.findAll(PageRequest.of(pageDTO.getPageNumber(), pageDTO.getPageSize()));
@@ -44,7 +45,7 @@ public class CulturalOfferSubtypeController {
         return new ResponseEntity<>(culturalOfferSubtypeDTOS, HttpStatus.OK);
     }
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<CulturalOfferSubtypeDTO> getCulturalOfferSubtype(@PathVariable Long id) {
         Optional<CulturalOfferSubtype> culturalOfferSubtype = culturalOfferSubtypeService.findById(id);
@@ -54,7 +55,7 @@ public class CulturalOfferSubtypeController {
         return new ResponseEntity<>(culturalOfferSubtypeMapper.toDto(culturalOfferSubtype.get()), HttpStatus.OK);
     }
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CulturalOfferSubtypeDTO> createCulturalOfferSubtype(@RequestBody @Validated CulturalOfferSubtypeDTO culturalOfferSubtypeDTO) {
         CulturalOfferSubtype newCulturalOfferSubtype;
@@ -69,7 +70,7 @@ public class CulturalOfferSubtypeController {
         return new ResponseEntity<>(culturalOfferSubtypeMapper.toDto(newCulturalOfferSubtype), HttpStatus.OK);
     }
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<CulturalOfferSubtypeDTO> updateCulturalOfferSubtype(@RequestBody @Validated CulturalOfferSubtypeDTO culturalOfferSubtypeDTO,
                                                                         @PathVariable Long id) {
@@ -86,7 +87,7 @@ public class CulturalOfferSubtypeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteCulturalOfferSubtype(@PathVariable Long id) {
         Optional<CulturalOfferSubtype> culturalOfferSubtype = culturalOfferSubtypeService.findById(id);

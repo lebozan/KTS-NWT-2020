@@ -101,6 +101,7 @@ public class AuthController {
 
         Map<String, String> result = new HashMap<>();
         result.put("result", "success");
+        result.put("message", "Password changed successfully!");
         return ResponseEntity.accepted().body(result);
     }
 
