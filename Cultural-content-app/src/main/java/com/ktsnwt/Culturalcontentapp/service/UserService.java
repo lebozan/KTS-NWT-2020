@@ -1,16 +1,17 @@
 package com.ktsnwt.Culturalcontentapp.service;
 
-import com.ktsnwt.Culturalcontentapp.dto.CulturalOfferTypeDTO;
 import com.ktsnwt.Culturalcontentapp.dto.UserDTO;
-import com.ktsnwt.Culturalcontentapp.model.CulturalOfferType;
-import com.ktsnwt.Culturalcontentapp.model.Role;
+import com.ktsnwt.Culturalcontentapp.model.CulturalOffer;
+import com.ktsnwt.Culturalcontentapp.model.RegisteredUser;
 import com.ktsnwt.Culturalcontentapp.model.User;
-import com.ktsnwt.Culturalcontentapp.repository.CulturalOfferTypeRepository;
 import com.ktsnwt.Culturalcontentapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
 
     public List<User> findAll() {
@@ -67,6 +71,33 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void addSubscription(long userId, CulturalOffer culturalOffer) {
+        Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+        User authenticatedUser = (User) currentUser.getPrincipal();
+
+//        if (authenticationManager != null) {
+//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
+//        } else {
+//            return;
+//        }
+
+        Optional<User> user = userRepository.findByEmail(authenticatedUser.getEmail());
+        RegisteredUser updateUser = (RegisteredUser) user.orElseThrow();
+        updateUser.getSubscriptions().add(culturalOffer);
+
+        userRepository.save(updateUser);
+    }
+
+    public void removeSubscription(long userId, CulturalOffer culturalOffer) {
+        Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = ((User) currentUser.getPrincipal()).getEmail();
+
+        Optional<User> user = userRepository.findByEmail(username);
+        RegisteredUser updateUser = (RegisteredUser) user.orElseThrow();
+        updateUser.getSubscriptions().remove(culturalOffer);
+
+        userRepository.save(updateUser);
+    }
 
     public void delete(Long id) throws Exception {
         Optional<User> existingUser = userRepository.findById(id);

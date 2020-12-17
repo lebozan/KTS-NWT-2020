@@ -2,9 +2,14 @@ package com.ktsnwt.Culturalcontentapp.controller;
 
 import com.ktsnwt.Culturalcontentapp.dto.PageDTO;
 import com.ktsnwt.Culturalcontentapp.dto.RegisterDTO;
+import com.ktsnwt.Culturalcontentapp.dto.SubscriptionsDTO;
 import com.ktsnwt.Culturalcontentapp.dto.UserDTO;
+import com.ktsnwt.Culturalcontentapp.helper.SubscriptionsMapper;
 import com.ktsnwt.Culturalcontentapp.helper.UserMapper;
+import com.ktsnwt.Culturalcontentapp.model.CulturalOffer;
+import com.ktsnwt.Culturalcontentapp.model.RegisteredUser;
 import com.ktsnwt.Culturalcontentapp.model.User;
+import com.ktsnwt.Culturalcontentapp.service.CulturalOfferService;
 import com.ktsnwt.Culturalcontentapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,10 +36,15 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    CulturalOfferService culturalOfferService;
+
     private final UserMapper userMapper;
+    private final SubscriptionsMapper subscriptionsMapper;
 
     public UserController() {
         userMapper = new UserMapper();
+        subscriptionsMapper = new SubscriptionsMapper();
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -57,19 +67,17 @@ public class UserController {
         return new ResponseEntity<>(userMapper.toDto(user.get()), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @RequestMapping(value = "/{id}/subscriptions", method = RequestMethod.GET)
+    public ResponseEntity<SubscriptionsDTO> getUserSubscriptions(@PathVariable Long id) {
+        Optional<User> user = userService.findById(id);
+        if (user.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        RegisteredUser registeredUser = (RegisteredUser) user.get();
+        return new ResponseEntity<>(subscriptionsMapper.toDto(registeredUser.getSubscriptions()), HttpStatus.OK);
+    }
 
-//    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<UserDTO> createUser(@RequestBody @Valid RegisterDTO newUserDTO) {
-//        User newUser;
-//        try {
-//            newUser = userMapper.toRegisterEntity(newUserDTO);
-//            newUser = userService.create(newUser);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//
-//        return new ResponseEntity<>(userMapper.toDto(newUser), HttpStatus.OK);
-//    }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -100,6 +108,40 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.OK);
 
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(value = "/{userId}/subscribe/{culturalOfferId}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> addSubscription(@PathVariable Long userId, @PathVariable Long culturalOfferId) {
+//        Optional<User> optionalUser = userService.findById(userId);
+        Optional<CulturalOffer> optionalCulturalOffer = culturalOfferService.findOne(culturalOfferId);
+        if (optionalCulturalOffer.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+//        RegisteredUser user = (RegisteredUser) optionalUser.get();
+        CulturalOffer culturalOffer = optionalCulturalOffer.get();
+
+//        user.getSubscriptions().add(culturalOffer);
+
+        userService.addSubscription(userId, culturalOffer);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(value = "/{userId}/unsubscribe/{culturalOfferId}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> removeSubscription(@PathVariable Long userId, @PathVariable Long culturalOfferId) {
+
+        Optional<CulturalOffer> optionalCulturalOffer = culturalOfferService.findOne(culturalOfferId);
+        if (optionalCulturalOffer.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        CulturalOffer culturalOffer = optionalCulturalOffer.get();
+
+        userService.removeSubscription(userId, culturalOffer);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

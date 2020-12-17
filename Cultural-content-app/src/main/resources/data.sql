@@ -50,3 +50,5 @@ INSERT into cultural_offer(id, description, name, location_id, subtype_id) VALUE
 
 INSERT into cultural_offer_ratings(cultural_offer_id, ratings_id) VALUES (100, 100);
 INSERT into cultural_offer_ratings(cultural_offer_id, ratings_id) VALUES (102, 101);
+
+INSERT into user_subscriptions(user_id, cultural_offer_id) VALUES (1000, 100);

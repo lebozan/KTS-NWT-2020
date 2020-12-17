@@ -30,6 +30,14 @@ public class TokenBasedAuthentication extends AbstractAuthenticationToken {
     }
 
     @Override
+    public String toString() {
+        return "TokenBasedAuthentication{" +
+                "token='" + token + '\'' +
+                ", principle=" + principle +
+                '}';
+    }
+
+    @Override
     public boolean isAuthenticated() {
         return true;
     }
