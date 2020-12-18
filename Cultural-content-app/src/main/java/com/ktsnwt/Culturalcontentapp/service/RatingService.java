@@ -52,6 +52,18 @@ public class RatingService {
         ratingRepository.save(rating);
     }
 
+    public void updateComment(Long id, String newComment) throws Exception{
+        Optional<Rating> existingRating = ratingRepository.findById(id);
+        if (existingRating.isEmpty()) {
+            throw new Exception("Rating with given id doesn't exist!");
+        }
+
+        Rating rating = existingRating.get();
+        rating.setComment(newComment);
+
+        ratingRepository.save(rating);
+    }
+
 
     public void delete(Long id) throws Exception {
         Optional<Rating> existingRating = ratingRepository.findById(id);

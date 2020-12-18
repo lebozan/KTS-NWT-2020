@@ -9,17 +9,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class RatingDTO {
-
-    private Long id;
-
-    private float ratingValue;
-
-    private String comment;
-
-    private List<ImageDTO> images;
-
-    private UserDTO user;
-
-
+public class SubscriptionsDTO {
+    List<Long> subscriptions;
 }

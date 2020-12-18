@@ -2,9 +2,11 @@ package com.ktsnwt.Culturalcontentapp.controller;
 
 import com.ktsnwt.Culturalcontentapp.dto.PageDTO;
 import com.ktsnwt.Culturalcontentapp.dto.RatingDTO;
+import com.ktsnwt.Culturalcontentapp.helper.ImageMapper;
 import com.ktsnwt.Culturalcontentapp.helper.RatingMapper;
 import com.ktsnwt.Culturalcontentapp.model.Rating;
 import com.ktsnwt.Culturalcontentapp.model.User;
+import com.ktsnwt.Culturalcontentapp.service.ImageService;
 import com.ktsnwt.Culturalcontentapp.service.RatingService;
 import com.ktsnwt.Culturalcontentapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +34,13 @@ public class RatingController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ImageService imageService;
+
     private final RatingMapper ratingMapper;
 
     public RatingController() {
-        ratingMapper = new RatingMapper();
+        ratingMapper = new RatingMapper(new ImageMapper());
     }
 
 
@@ -95,6 +100,22 @@ public class RatingController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(value = "/{id}/comment", method = RequestMethod.PUT)
+    public ResponseEntity<RatingDTO> updateComment(@RequestBody @Valid NewComment newComment, @PathVariable Long id) {
+        Optional<Rating> optionalRating = ratingService.findById(id);
+        if (optionalRating.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        try {
+            ratingService.updateComment(optionalRating.get().getId(), newComment.newComment);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -111,5 +132,10 @@ public class RatingController {
 
     }
 
+
+
+    private static class NewComment {
+        public String newComment;
+    }
 
 }

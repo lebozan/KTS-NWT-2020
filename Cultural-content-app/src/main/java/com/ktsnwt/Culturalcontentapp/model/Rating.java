@@ -24,7 +24,7 @@ public class Rating {
     @Column
     private String comment;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private Set<Image> images;
 
     @OneToOne

@@ -26,4 +26,8 @@ public class Image {
     @OneToOne
     private News news;
 
+    public Image(long id, String addressURL) {
+        this.id = id;
+        this.addressURL = addressURL;
+    }
 }

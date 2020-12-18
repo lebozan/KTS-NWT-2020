@@ -8,6 +8,8 @@ import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @NoArgsConstructor
 @Data
@@ -39,12 +41,12 @@ public class CulturalOffer {
     @Column(nullable=false)
     private String description;
     
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private CulturalOfferSubtype subtype;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private Set<Rating> ratings;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private Set<News> news;
 }

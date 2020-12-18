@@ -1,9 +1,6 @@
 package com.ktsnwt.Culturalcontentapp.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,14 +8,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+
 @NoArgsConstructor
-@AllArgsConstructor()
-@Data
+@AllArgsConstructor
 @Entity
 @DiscriminatorValue("User")
 public class RegisteredUser extends User{
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable( name = "user_subscriptions",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "cultural_offer_id", referencedColumnName = "id")
@@ -46,5 +43,29 @@ public class RegisteredUser extends User{
         super(firstName, lastName, email, password);
         this.active = false;
         this.subscriptions = null;
+    }
+
+    public Set<CulturalOffer> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(Set<CulturalOffer> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return  super.toString() +
+                "subscriptions=" + subscriptions +
+                ", active=" + active +
+                '}';
     }
 }
