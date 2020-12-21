@@ -38,8 +38,8 @@ public class CulturalOfferSubtypeController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Page<CulturalOfferSubtypeDTO>> getAllCulturalOfferSubtypes(@RequestBody @Validated PageDTO pageDTO) {
-        Page<CulturalOfferSubtype> culturalOfferSubtypes = culturalOfferSubtypeService.findAll(PageRequest.of(pageDTO.getPageNumber(), pageDTO.getPageSize()));
+    public ResponseEntity<Page<CulturalOfferSubtypeDTO>> getAllCulturalOfferSubtypes(@RequestParam int page, @RequestParam int size) {
+        Page<CulturalOfferSubtype> culturalOfferSubtypes = culturalOfferSubtypeService.findAll(PageRequest.of(page, size));
         Page<CulturalOfferSubtypeDTO> culturalOfferSubtypeDTOS = culturalOfferSubtypes.map(culturalOfferSubtypeMapper::toDto);
 
         return new ResponseEntity<>(culturalOfferSubtypeDTOS, HttpStatus.OK);
@@ -75,16 +75,17 @@ public class CulturalOfferSubtypeController {
     public ResponseEntity<CulturalOfferSubtypeDTO> updateCulturalOfferSubtype(@RequestBody @Validated CulturalOfferSubtypeDTO culturalOfferSubtypeDTO,
                                                                         @PathVariable Long id) {
         Optional<CulturalOfferSubtype> culturalOfferSubtype = culturalOfferSubtypeService.findById(id);
+        CulturalOfferSubtype updatedCulturalOfferSubtype;
         if (culturalOfferSubtype.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         try {
-            culturalOfferSubtypeService.update(culturalOfferSubtype.get().getId(), culturalOfferSubtypeDTO);
+            updatedCulturalOfferSubtype = culturalOfferSubtypeService.update(culturalOfferSubtype.get().getId(), culturalOfferSubtypeDTO);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(culturalOfferSubtypeMapper.toDto(updatedCulturalOfferSubtype), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

@@ -32,10 +32,10 @@ public class CulturalOffer {
     private String name;
 
     @Column(nullable=false)
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private Set<Image> images;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Location location;
 
     @Column(nullable=false)

@@ -49,8 +49,9 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Page<UserDTO>> getAllUsers(@RequestBody PageDTO pageDTO) {
-        Page<User> users = userService.findAllUsers(PageRequest.of(pageDTO.getPageNumber(), pageDTO.getPageSize()));
+    public ResponseEntity<Page<UserDTO>> getAllUsers(@RequestParam int page, @RequestParam int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> users = userService.findAllUsers(pageable);
 
         Page<UserDTO> userDTOS = users.map(userMapper::toDto);
 
@@ -83,16 +84,17 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable Long id) {
         Optional<User> optionalUser = userService.findById(id);
+        User updatedUser;
         if (optionalUser.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         try {
-            userService.update(optionalUser.get().getId(), userDTO);
+            updatedUser = userService.update(optionalUser.get().getId(), userDTO);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(userMapper.toDto(updatedUser), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -111,8 +113,8 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping(value = "/{userId}/subscribe/{culturalOfferId}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> addSubscription(@PathVariable Long userId, @PathVariable Long culturalOfferId) {
+    @RequestMapping(value = "/subscribe/{culturalOfferId}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> addSubscription(@PathVariable Long culturalOfferId) {
 //        Optional<User> optionalUser = userService.findById(userId);
         Optional<CulturalOffer> optionalCulturalOffer = culturalOfferService.findOne(culturalOfferId);
         if (optionalCulturalOffer.isEmpty()) {
@@ -123,14 +125,14 @@ public class UserController {
 
 //        user.getSubscriptions().add(culturalOffer);
 
-        userService.addSubscription(userId, culturalOffer);
+        userService.addSubscription(culturalOffer);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping(value = "/{userId}/unsubscribe/{culturalOfferId}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> removeSubscription(@PathVariable Long userId, @PathVariable Long culturalOfferId) {
+    @RequestMapping(value = "/unsubscribe/{culturalOfferId}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> removeSubscription(@PathVariable Long culturalOfferId) {
 
         Optional<CulturalOffer> optionalCulturalOffer = culturalOfferService.findOne(culturalOfferId);
         if (optionalCulturalOffer.isEmpty()) {
@@ -139,7 +141,7 @@ public class UserController {
 
         CulturalOffer culturalOffer = optionalCulturalOffer.get();
 
-        userService.removeSubscription(userId, culturalOffer);
+        userService.removeSubscription(culturalOffer);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

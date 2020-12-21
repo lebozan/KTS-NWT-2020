@@ -22,10 +22,6 @@ public class CulturalOfferSubtypeService {
         return culturalOfferSubtypeRepository.findAll(pageable);
     }
 
-    public Optional<CulturalOfferSubtype> findOne(Long id) {
-        return culturalOfferSubtypeRepository.findById(id);
-    }
-
     public CulturalOfferSubtype findByName(String name) {
         return culturalOfferSubtypeRepository.findByName(name);
     }
@@ -43,15 +39,17 @@ public class CulturalOfferSubtypeService {
         return culturalOfferSubtypeRepository.save(newSubtype);
     }
 
-    public void update(Long id, CulturalOfferSubtypeDTO updateDTO) throws Exception {
+    public CulturalOfferSubtype update(Long id, CulturalOfferSubtypeDTO updateDTO) throws Exception {
         Optional<CulturalOfferSubtype> existingCulturalOfferType = culturalOfferSubtypeRepository.findById(id);
         if (existingCulturalOfferType.isEmpty()) {
             throw new Exception("Cultural offer subtype with given id doesn't exist!");
         }
         CulturalOfferSubtype culturalOfferSubtype = existingCulturalOfferType.get();
-        culturalOfferSubtype.setName(updateDTO.getName());
+        if (updateDTO.getName() != null) {
+            culturalOfferSubtype.setName(updateDTO.getName());
+        }
 
-        culturalOfferSubtypeRepository.save(culturalOfferSubtype);
+        return culturalOfferSubtypeRepository.save(culturalOfferSubtype);
     }
 
 
