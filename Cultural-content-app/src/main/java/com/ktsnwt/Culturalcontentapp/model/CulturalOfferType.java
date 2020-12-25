@@ -22,7 +22,7 @@ public class CulturalOfferType {
     private String name;
 
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private Set<CulturalOfferSubtype> subtypes;
 
     public CulturalOfferType(String name) {

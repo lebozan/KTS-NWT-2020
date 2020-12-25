@@ -132,7 +132,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/unsubscribe/{culturalOfferId}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> removeSubscription(@PathVariable Long culturalOfferId) {
+    public ResponseEntity<Void> removeSubscription(@PathVariable Long culturalOfferId) throws Exception {
 
         Optional<CulturalOffer> optionalCulturalOffer = culturalOfferService.findOne(culturalOfferId);
         if (optionalCulturalOffer.isEmpty()) {

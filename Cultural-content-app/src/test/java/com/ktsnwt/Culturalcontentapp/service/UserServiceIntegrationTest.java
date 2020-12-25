@@ -58,9 +58,9 @@ class UserServiceIntegrationTest {
 
     @Test
     void findByEmail() {
-        Optional<User> findUser = userService.findByEmail(USER_EMAIL1);
+        Optional<User> findUser = userService.findByEmail(USER_EMAIL2);
         assertTrue(findUser.isPresent());
-        assertEquals(USER_EMAIL1, findUser.get().getEmail());
+        assertEquals(USER_EMAIL2, findUser.get().getEmail());
 
     }
 
@@ -85,23 +85,40 @@ class UserServiceIntegrationTest {
     @Test
     void addSubscription() {
 
-//        Authentication authentication = authenticationManager
-//                .authenticate(new UsernamePasswordAuthenticationToken(USER_EMAIL2, USER_PASSWORD2));
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//
-//        CulturalOffer newSubscription = culturalOfferService.findByName(ADD_SUBSCRIPTION_NAME);
-//        userService.addSubscription(USER_ID2, newSubscription);
-//
-//
-//        RegisteredUser updatedUser = (RegisteredUser) userService.findById(USER_ID2).orElseThrow();
-//        assertEquals(NUMBER_OF_SUBSCRIPTIONS, updatedUser.getSubscriptions().size());
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(USER_EMAIL2, USER_PASSWORD2));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+
+        CulturalOffer newSubscription = culturalOfferService.findByName(ADD_SUBSCRIPTION_NAME);
+
+        assertDoesNotThrow(() -> {userService.addSubscription(newSubscription);} );
+
+
+        RegisteredUser updatedUser = (RegisteredUser) userService.findById(USER_ID2).orElseThrow();
+        assertEquals(NUMBER_OF_SUBSCRIPTIONS, updatedUser.getSubscriptions().size());
 
 
     }
 
     @Test
     void removeSubscription() {
+
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(USER_EMAIL1, USER_PASSWORD1));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+
+        CulturalOffer newSubscription = culturalOfferService.findByName(REMOVE_SUBSCRIPTION_NAME);
+
+
+        assertNotNull(newSubscription);
+        assertDoesNotThrow(() -> {
+            userService.removeSubscription(newSubscription);
+        } );
+
+        RegisteredUser updatedUser = (RegisteredUser) userService.findById(USER_ID1).orElseThrow();
+        assertEquals(USER1_NUMBER_OF_SUBSCRIPTIONS - 1, updatedUser.getSubscriptions().size());
 
     }
 

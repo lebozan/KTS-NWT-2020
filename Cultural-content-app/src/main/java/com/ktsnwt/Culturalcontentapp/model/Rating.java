@@ -19,7 +19,7 @@ public class Rating {
     private Long id;
 
     @Column(nullable = false)
-    private float ratingValue;
+    private Float ratingValue;
 
     @Column
     private String comment;
@@ -27,7 +27,7 @@ public class Rating {
     @OneToMany(fetch = FetchType.LAZY)
     private Set<Image> images;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
 
     public Rating(float ratingValue, String comment) {

@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,12 +47,9 @@ public class RatingController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<RatingDTO>> getAllRatings(@RequestBody @Validated PageDTO pageDTO) {
-        Page<Rating> ratings = ratingService.findAll(PageRequest.of(pageDTO.getPageNumber(), pageDTO.getPageSize()));
-        List<RatingDTO> ratingDTOS = new ArrayList<>();
-        for (Rating r : ratings) {
-            ratingDTOS.add(ratingMapper.toDto(r));
-        }
+    public ResponseEntity<Page<RatingDTO>> getAllRatings(@RequestParam int page, @RequestParam int size) {
+        Page<Rating> ratings = ratingService.findAll(PageRequest.of(page, size));
+        Page<RatingDTO> ratingDTOS = ratings.map(ratingMapper::toDto);
 
         return new ResponseEntity<>(ratingDTOS, HttpStatus.OK);
     }
@@ -72,9 +71,13 @@ public class RatingController {
     public ResponseEntity<RatingDTO> createRating(@RequestBody @Valid RatingDTO ratingDTO) {
         Rating newRating;
         try {
-            Optional<User> u = userService.findByEmail(ratingDTO.getUser().getEmail());
+            Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+            User authenticatedUser = (User) currentUser.getPrincipal();
+
+            Optional<User> user = userService.findByEmail(authenticatedUser.getEmail());
+
             newRating = ratingMapper.toEntity(ratingDTO);
-            newRating.setUser(u.orElseThrow());
+            newRating.setUser(user.orElseThrow());
             newRating = ratingService.create(newRating);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -88,32 +91,36 @@ public class RatingController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<RatingDTO> updateRating(@RequestBody @Validated RatingDTO ratingDTO, @PathVariable Long id) {
         Optional<Rating> optionalRating = ratingService.findById(id);
+        Rating updatedRating;
+
         if (optionalRating.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         try {
-            ratingService.update(optionalRating.get().getId(), ratingDTO);
+            updatedRating = ratingService.update(optionalRating.get().getId(), ratingDTO);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(ratingMapper.toDto(updatedRating), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/{id}/comment", method = RequestMethod.PUT)
     public ResponseEntity<RatingDTO> updateComment(@RequestBody @Valid NewComment newComment, @PathVariable Long id) {
         Optional<Rating> optionalRating = ratingService.findById(id);
+        Rating updatedRating;
+
         if (optionalRating.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         try {
-            ratingService.updateComment(optionalRating.get().getId(), newComment.newComment);
+            updatedRating = ratingService.updateComment(optionalRating.get().getId(), newComment.newComment);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(ratingMapper.toDto(updatedRating), HttpStatus.OK);
     }
 
 

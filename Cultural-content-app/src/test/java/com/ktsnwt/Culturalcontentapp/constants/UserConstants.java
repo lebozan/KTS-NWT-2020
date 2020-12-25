@@ -20,6 +20,8 @@ public class UserConstants {
     public static final String USER_PASSWORD1 = "sifra1";
     public static final int USER1_NUMBER_OF_SUBSCRIPTIONS = 1;
 
+    public static final String USER1_PASSWORD_CHANGE = "novasifra1";
+
     public static final long USER_ID2 = 1001;
     public static final String USER_EMAIL2 = "user2@mail.com";
     public static final String USER_FIRSTNAME2 = "Petar";
@@ -39,7 +41,11 @@ public class UserConstants {
     public static final String UPDATE_USER_LASTNAME = "promena prezime";
 
     public static final String ADD_SUBSCRIPTION_NAME = "Sajam poljoprivrede";
+    public static final String REMOVE_SUBSCRIPTION_NAME = "Festival čokolade";
+
     public static final int NUMBER_OF_SUBSCRIPTIONS = 1;
+
+    public static final String NON_EXISTENT_EMAIL = "nepostoji@mail.com";
 
 
 }

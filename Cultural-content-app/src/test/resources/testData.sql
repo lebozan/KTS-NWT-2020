@@ -1,3 +1,4 @@
+
 --password: admin
 INSERT INTO registered_user (type, id, email, first_name, last_name, password, active) VALUES
 ('Admin',100,'admin@mail.com','Bojan', 'Cakic','$2y$12$YEZzLa8qmv69iere8iQzkO7AkJtcigLOrFI7jUSNRgYvTd2IZJZXq', true);
@@ -42,7 +43,7 @@ INSERT into cultural_offer_subtype(id, name, type_id) VALUES (104, 'Sajam', 101)
 
 INSERT into rating(id, comment, rating_value, user_id) VALUES (100, 'Dobar komentar', 4, 1000);
 INSERT into rating(id, comment, rating_value, user_id) VALUES (101, 'Los komentar', 2, 1000);
-INSERT into rating(id, comment, rating_value, user_id) VALUES (102, 'Dobar komentar', 3.5, 1001);
+INSERT into rating(id, comment, rating_value, user_id   ) VALUES (102, 'Dobar komentar', 3.5, 1001);
 
 INSERT into cultural_offer(id, description, name, location_id, subtype_id) VALUES (100, 'Opis', 'Festival čokolade', null, 103);
 INSERT into cultural_offer(id, description, name, location_id, subtype_id) VALUES (101, 'Opis', 'Sajam poljoprivrede', null, 104);
@@ -52,3 +53,6 @@ INSERT into cultural_offer_ratings(cultural_offer_id, ratings_id) VALUES (100, 1
 INSERT into cultural_offer_ratings(cultural_offer_id, ratings_id) VALUES (102, 101);
 
 INSERT into user_subscriptions(user_id, cultural_offer_id) VALUES (1000, 100);
+
+INSERT into image(id, addressurl) values ( 100, 'https://asdqwepoldsgoej' );
+INSERT into image(id, addressurl) values ( 101, 'https://asdqweasdzxc' );

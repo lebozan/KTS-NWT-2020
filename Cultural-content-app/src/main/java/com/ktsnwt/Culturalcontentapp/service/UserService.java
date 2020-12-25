@@ -75,11 +75,6 @@ public class UserService {
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
         User authenticatedUser = (User) currentUser.getPrincipal();
 
-//        if (authenticationManager != null) {
-//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
-//        } else {
-//            return;
-//        }
 
         Optional<User> user = userRepository.findByEmail(authenticatedUser.getEmail());
         RegisteredUser updateUser = (RegisteredUser) user.orElseThrow();
@@ -88,15 +83,19 @@ public class UserService {
         userRepository.save(updateUser);
     }
 
-    public void removeSubscription(CulturalOffer culturalOffer) {
+    public void removeSubscription(CulturalOffer culturalOffer) throws Exception {
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
         String username = ((User) currentUser.getPrincipal()).getEmail();
 
         Optional<User> user = userRepository.findByEmail(username);
         RegisteredUser updateUser = (RegisteredUser) user.orElseThrow();
-        updateUser.getSubscriptions().remove(culturalOffer);
+        if (updateUser.getSubscriptions().remove(culturalOffer)) {
+            userRepository.save(updateUser);
+        } else {
+            throw new Exception("not removed");
+        }
 
-        userRepository.save(updateUser);
+
     }
 
     public void delete(Long id) throws Exception {
