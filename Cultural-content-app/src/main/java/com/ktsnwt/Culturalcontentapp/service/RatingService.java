@@ -38,21 +38,28 @@ public class RatingService {
         return ratingRepository.save(newRating);
     }
 
-    public void update(Long id, RatingDTO updateDTO) throws Exception {
+    public Rating update(Long id, RatingDTO updateDTO) throws Exception {
         Optional<Rating> existingRating = ratingRepository.findById(id);
+
         if (existingRating.isEmpty()) {
             throw new Exception("Rating with given id doesn't exist!");
         }
         Rating rating = existingRating.get();
 
-        rating.setComment(updateDTO.getComment());
-        rating.setRatingValue(updateDTO.getRatingValue());
+        if (rating.getComment() != null) {
+            rating.setComment(updateDTO.getComment());
+        }
+
+        if (rating.getRatingValue() != null) {
+            rating.setRatingValue(updateDTO.getRatingValue());
+        }
 
 
-        ratingRepository.save(rating);
+
+        return ratingRepository.save(rating);
     }
 
-    public void updateComment(Long id, String newComment) throws Exception{
+    public Rating updateComment(Long id, String newComment) throws Exception{
         Optional<Rating> existingRating = ratingRepository.findById(id);
         if (existingRating.isEmpty()) {
             throw new Exception("Rating with given id doesn't exist!");
@@ -61,7 +68,7 @@ public class RatingService {
         Rating rating = existingRating.get();
         rating.setComment(newComment);
 
-        ratingRepository.save(rating);
+        return ratingRepository.save(rating);
     }
 
 

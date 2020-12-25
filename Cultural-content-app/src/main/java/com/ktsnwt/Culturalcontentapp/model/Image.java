@@ -20,10 +20,10 @@ public class Image {
     private String addressURL;
 
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Rating rating;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private News news;
 
     public Image(long id, String addressURL) {

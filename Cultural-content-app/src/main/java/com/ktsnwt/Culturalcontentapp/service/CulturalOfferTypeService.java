@@ -1,13 +1,13 @@
 package com.ktsnwt.Culturalcontentapp.service;
 
 import com.ktsnwt.Culturalcontentapp.dto.CulturalOfferTypeDTO;
-import com.ktsnwt.Culturalcontentapp.model.CulturalOffer;
 import com.ktsnwt.Culturalcontentapp.model.CulturalOfferType;
 import com.ktsnwt.Culturalcontentapp.repository.CulturalOfferTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,12 +17,8 @@ public class CulturalOfferTypeService {
     private CulturalOfferTypeRepository culturalOfferTypeRepository;
 
 
-    public List<CulturalOfferType> findAll() {
-        return culturalOfferTypeRepository.findAll();
-    }
-
-    public Optional<CulturalOfferType> findOne(Long id) {
-        return culturalOfferTypeRepository.findById(id);
+    public Page<CulturalOfferType> findAll(Pageable pageable) {
+        return culturalOfferTypeRepository.findAll(pageable);
     }
 
     public CulturalOfferType findByName(String name) {
@@ -41,7 +37,7 @@ public class CulturalOfferTypeService {
         return culturalOfferTypeRepository.save(newType);
     }
 
-    public void update(Long id, CulturalOfferTypeDTO updateDTO) throws Exception {
+    public CulturalOfferType update(Long id, CulturalOfferTypeDTO updateDTO) throws Exception {
         Optional<CulturalOfferType> existingCulturalOfferType = culturalOfferTypeRepository.findById(id);
         if (existingCulturalOfferType.isEmpty()) {
             throw new Exception("Cultural offer type with given id doesn't exist!");
@@ -49,7 +45,7 @@ public class CulturalOfferTypeService {
         CulturalOfferType culturalOfferType = existingCulturalOfferType.get();
         culturalOfferType.setName(updateDTO.getName());
 
-        culturalOfferTypeRepository.save(culturalOfferType);
+        return culturalOfferTypeRepository.save(culturalOfferType);
     }
 
 

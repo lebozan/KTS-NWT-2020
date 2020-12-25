@@ -51,7 +51,7 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public void update(Long id, UserDTO updateDTO) throws Exception {
+    public User update(Long id, UserDTO updateDTO) throws Exception {
         Optional<User> existingUser = userRepository.findById(id);
         if (existingUser.isEmpty()) {
             throw new Exception("User with given id doesn't exist!");
@@ -68,18 +68,13 @@ public class UserService {
             user.setLastName(updateDTO.getLastName());
         }
 
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
-    public void addSubscription(long userId, CulturalOffer culturalOffer) {
+    public void addSubscription(CulturalOffer culturalOffer) {
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
         User authenticatedUser = (User) currentUser.getPrincipal();
 
-//        if (authenticationManager != null) {
-//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
-//        } else {
-//            return;
-//        }
 
         Optional<User> user = userRepository.findByEmail(authenticatedUser.getEmail());
         RegisteredUser updateUser = (RegisteredUser) user.orElseThrow();
@@ -88,15 +83,19 @@ public class UserService {
         userRepository.save(updateUser);
     }
 
-    public void removeSubscription(long userId, CulturalOffer culturalOffer) {
+    public void removeSubscription(CulturalOffer culturalOffer) throws Exception {
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
         String username = ((User) currentUser.getPrincipal()).getEmail();
 
         Optional<User> user = userRepository.findByEmail(username);
         RegisteredUser updateUser = (RegisteredUser) user.orElseThrow();
-        updateUser.getSubscriptions().remove(culturalOffer);
+        if (updateUser.getSubscriptions().remove(culturalOffer)) {
+            userRepository.save(updateUser);
+        } else {
+            throw new Exception("not removed");
+        }
 
-        userRepository.save(updateUser);
+
     }
 
     public void delete(Long id) throws Exception {

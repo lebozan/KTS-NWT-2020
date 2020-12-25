@@ -28,10 +28,10 @@ public class News {
     @Column
     private Date dateCreated;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private CulturalOffer culturalOffer;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private Set<Image> images;
     
 }

@@ -1,6 +1,7 @@
 package com.ktsnwt.Culturalcontentapp.model;
 
 
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -8,8 +9,6 @@ import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @NoArgsConstructor
 @Data
@@ -32,10 +31,10 @@ public class CulturalOffer {
     private String name;
 
     @Column(nullable=false)
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Image> images;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Location location;
 
     @Column(nullable=false)
@@ -44,9 +43,23 @@ public class CulturalOffer {
     @OneToOne(fetch = FetchType.EAGER)
     private CulturalOfferSubtype subtype;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Rating> ratings;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<News> news;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CulturalOffer that = (CulturalOffer) o;
+        return id.equals(that.id) &&
+                name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }

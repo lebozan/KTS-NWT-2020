@@ -1,10 +1,13 @@
 package com.ktsnwt.Culturalcontentapp.controller;
 
 import com.ktsnwt.Culturalcontentapp.dto.CulturalOfferTypeDTO;
+import com.ktsnwt.Culturalcontentapp.dto.PageDTO;
 import com.ktsnwt.Culturalcontentapp.helper.CulturalOfferTypeMapper;
 import com.ktsnwt.Culturalcontentapp.model.CulturalOfferType;
 import com.ktsnwt.Culturalcontentapp.service.CulturalOfferTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,14 +33,12 @@ public class CulturalOfferTypeController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<CulturalOfferTypeDTO>> getAllCulturalOfferTypes() {
-        List<CulturalOfferType> culturalOfferTypes = culturalOfferTypeService.findAll();
-        List<CulturalOfferTypeDTO> culturalOfferTypeDTOS = new ArrayList<>();
-        for (CulturalOfferType c : culturalOfferTypes) {
-            culturalOfferTypeDTOS.add(culturalOfferTypeMapper.toDto(c));
-        }
+    public ResponseEntity<Page<CulturalOfferTypeDTO>> getAllCulturalOfferTypes(@RequestParam int page, @RequestParam int size) {
+        Page<CulturalOfferType> culturalOfferTypes = culturalOfferTypeService.findAll(PageRequest.of(page, size));
+        Page<CulturalOfferTypeDTO> culturalOfferTypeDTOS = culturalOfferTypes.map(culturalOfferTypeMapper::toDto);
+
 
         return new ResponseEntity<>(culturalOfferTypeDTOS, HttpStatus.OK);
     }
@@ -73,16 +74,17 @@ public class CulturalOfferTypeController {
     public ResponseEntity<CulturalOfferTypeDTO> updateCulturalOfferType(@RequestBody @Validated CulturalOfferTypeDTO culturalOfferTypeDTO,
                                                                         @PathVariable Long id) {
         Optional<CulturalOfferType> culturalOfferType = culturalOfferTypeService.findById(id);
+        CulturalOfferType updatedCulturalOfferType;
         if (culturalOfferType.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         try {
-            culturalOfferTypeService.update(culturalOfferType.get().getId(), culturalOfferTypeDTO);
+            updatedCulturalOfferType = culturalOfferTypeService.update(culturalOfferType.get().getId(), culturalOfferTypeDTO);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(culturalOfferTypeMapper.toDto(updatedCulturalOfferType), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

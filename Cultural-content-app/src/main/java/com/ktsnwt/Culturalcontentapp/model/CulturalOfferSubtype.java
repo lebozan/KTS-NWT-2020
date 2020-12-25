@@ -19,7 +19,7 @@ public class CulturalOfferSubtype {
     @Column(nullable=false, unique = true)
     private String name;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private CulturalOfferType type;
 
 

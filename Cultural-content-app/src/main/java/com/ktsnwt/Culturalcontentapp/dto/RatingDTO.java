@@ -13,7 +13,7 @@ public class RatingDTO {
 
     private Long id;
 
-    private float ratingValue;
+    private Float ratingValue;
 
     private String comment;
 
