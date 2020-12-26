@@ -44,7 +44,7 @@ public class CulturalOfferService {
         culturalOfferRepository.delete(existingCulturalOffer.get());
     }
 
-    public void update(Long id, CulturalOfferDTO updateDTO) throws Exception {
+    public CulturalOffer update(Long id, CulturalOfferDTO updateDTO) throws Exception {
         Optional<CulturalOffer> existingCulturalOffer = culturalOfferRepository.findById(id);
         if (existingCulturalOffer.isEmpty()) {
             throw new Exception("Cultural offer with this id doesn't exist!");
@@ -55,7 +55,7 @@ public class CulturalOfferService {
         culturalOffer.setLocation(updateDTO.getLocation());
         culturalOffer.setDescription(updateDTO.getDescription());
 
-        culturalOfferRepository.save(culturalOffer);
+        return culturalOfferRepository.save(culturalOffer);
     }
 
     
