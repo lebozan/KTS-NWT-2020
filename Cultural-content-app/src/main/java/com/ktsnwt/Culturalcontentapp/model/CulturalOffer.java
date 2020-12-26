@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class CulturalOffer {
 
-    public CulturalOffer(String name2, Set<Image> images2, Location location2, String description2) {
+    public CulturalOffer(String name2, Set<Image> images2, String location2, String description2) {
         this.name = name2;
         this.images = images2;
         this.location = location2;
@@ -35,7 +35,7 @@ public class CulturalOffer {
     private Set<Image> images;
 
     @OneToOne(fetch = FetchType.EAGER)
-    private Location location;
+    private String location;
 
     @Column(nullable=false)
     private String description;

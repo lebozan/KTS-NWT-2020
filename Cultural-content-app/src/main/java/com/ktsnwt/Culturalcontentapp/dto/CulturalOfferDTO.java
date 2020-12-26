@@ -19,7 +19,7 @@ public class CulturalOfferDTO {
     private long id;
     private String name;
     private Set<Image> images;
-    private Location location;
+    private String location;
     private String description;
     private CulturalOfferSubtypeDTO subtype;
     //proveri da li je rating i news ili ratingDTO i newsDTO
