@@ -34,6 +34,7 @@ public class CulturalOffer {
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Image> images;
 
+    //@Column(nullable=false)
     @OneToOne(fetch = FetchType.EAGER)
     private Location location;
 
