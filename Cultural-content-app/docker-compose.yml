@@ -1,0 +1,17 @@
+version: '3'
+services:
+  web:
+    image: kts-nwt
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+  db:
+    container_name: kts-nwt-db
+    image: postgres:13.1
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=ktsnwtdb
+    ports:
+      - 5432:5432

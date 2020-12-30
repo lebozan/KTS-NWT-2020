@@ -3,13 +3,10 @@ package com.ktsnwt.Culturalcontentapp.service;
 import com.ktsnwt.Culturalcontentapp.dto.UserDTO;
 import com.ktsnwt.Culturalcontentapp.model.User;
 import com.ktsnwt.Culturalcontentapp.repository.UserRepository;
-import org.checkerframework.checker.nullness.Opt;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,13 +19,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.ktsnwt.Culturalcontentapp.constants.UserConstants.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.ktsnwt.Culturalcontentapp.constants.UserConstants.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
