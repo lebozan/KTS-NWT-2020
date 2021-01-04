@@ -1,0 +1,13 @@
+<mat-card *ngFor="let sub of userSubs">
+    <mat-card-header>
+        <mat-card-title>{{sub.name}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+            {{sub.description}}
+        </p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="unsubscribe(sub.id)">Unsubscribe</button>
+    </mat-card-actions>
+</mat-card>

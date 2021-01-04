@@ -69,7 +69,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "cultural-content-front:build"
+            "browserTarget": "cultural-content-front:build",
+              "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {

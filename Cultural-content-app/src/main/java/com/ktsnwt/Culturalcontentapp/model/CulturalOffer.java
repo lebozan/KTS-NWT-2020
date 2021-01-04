@@ -44,10 +44,10 @@ public class CulturalOffer {
     @OneToOne(fetch = FetchType.EAGER)
     private CulturalOfferSubtype subtype;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     private Set<Rating> ratings;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     private Set<News> news;
 
     @Override

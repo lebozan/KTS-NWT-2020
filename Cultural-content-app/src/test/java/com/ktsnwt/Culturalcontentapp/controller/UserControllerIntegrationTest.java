@@ -151,7 +151,7 @@ class UserControllerIntegrationTest {
     @Test
     void testAddSubscription() {
 
-        login(USER_EMAIL2, USER_PASSWORD2);
+        login(USER_EMAIL1, USER_PASSWORD1);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", accessToken);
@@ -174,7 +174,7 @@ class UserControllerIntegrationTest {
 
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
 
-        ResponseEntity<Void> responseEntity = restTemplate.exchange("/api/users/unsubscribe/100", HttpMethod.PUT, httpEntity, Void.class);
+        ResponseEntity<Void> responseEntity = restTemplate.exchange("/api/users/unsubscribe/100", HttpMethod.GET, httpEntity, Void.class);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 

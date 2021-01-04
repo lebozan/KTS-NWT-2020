@@ -36,11 +36,9 @@ export class LoginComponent implements OnInit {
     this.authService.login(auth).subscribe(
       result => {
         const token: any = result;
-        console.log(token);
         localStorage.setItem('user', token.accessToken);
         localStorage.setItem('expiresIn', token.expiresIn);
-        // this.router.navigate([]);
-        this.toastr.success('uspesan login');
+        this.router.navigate(['user']);
       },
       error => {
           this.toastr.error(error.error);
