@@ -10,5 +10,5 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class SubscriptionsDTO {
-    List<Long> subscriptions;
+    List<CulturalOfferDTO> subscriptions;
 }

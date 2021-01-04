@@ -1,0 +1,23 @@
+<mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile>
+        <img alt="" [src]="selectedFile.src" *ngIf="selectedFile">
+        <label class="image-upload-container btn btn-bwm">
+            <!--                    <span>Select Image</span>-->
+            <input #imageInput
+                   type="file"
+                   accept="image/*"
+                   (change)="processFile(imageInput)">
+        </label>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <mat-list class="details-list">
+            <mat-list-item *ngIf="currentUser"> First name: {{currentUser.firstName}}</mat-list-item>
+            <mat-list-item *ngIf="currentUser"> Last name: {{currentUser.lastName}}</mat-list-item>
+            <mat-list-item *ngIf="currentUser"> Email: {{currentUser.email}}</mat-list-item>
+            <mat-list-item>
+<!--                <button mat-raised-button color="primary">change email</button>-->
+                <button mat-raised-button color="primary" (click)="changePasswordDialog()">change password</button>
+            </mat-list-item>
+        </mat-list>
+    </mat-grid-tile>
+</mat-grid-list>

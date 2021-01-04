@@ -87,8 +87,13 @@ public class UserService {
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
         String username = ((User) currentUser.getPrincipal()).getEmail();
 
-        Optional<User> user = userRepository.findByEmail(username);
-        RegisteredUser updateUser = (RegisteredUser) user.orElseThrow();
+        Optional<User> optionalUser = userRepository.findByEmail(username);
+        if (optionalUser.isEmpty()) {
+            throw new Exception("User not found");
+        }
+        User user = optionalUser.get();
+        RegisteredUser updateUser = (RegisteredUser) user;
+
         if (updateUser.getSubscriptions().remove(culturalOffer)) {
             userRepository.save(updateUser);
         } else {

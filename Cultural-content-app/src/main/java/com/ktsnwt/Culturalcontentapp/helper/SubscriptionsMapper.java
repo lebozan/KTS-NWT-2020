@@ -1,5 +1,6 @@
 package com.ktsnwt.Culturalcontentapp.helper;
 
+import com.ktsnwt.Culturalcontentapp.dto.CulturalOfferDTO;
 import com.ktsnwt.Culturalcontentapp.dto.SubscriptionsDTO;
 import com.ktsnwt.Culturalcontentapp.model.CulturalOffer;
 
@@ -15,9 +16,13 @@ public class SubscriptionsMapper implements MapperInterface<Set<CulturalOffer>, 
 
     @Override
     public SubscriptionsDTO toDto(Set<CulturalOffer> entity) {
-        List<Long> subs = new ArrayList<>();
+        List<CulturalOfferDTO> subs = new ArrayList<>();
         for (CulturalOffer cu : entity) {
-           subs.add(cu.getId());
+            CulturalOfferDTO dto = new CulturalOfferDTO();
+            dto.setId(cu.getId());
+            dto.setName(cu.getName());
+            dto.setDescription(cu.getDescription());
+            subs.add(dto);
         }
 
         return new SubscriptionsDTO(subs);

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class AuthTokenUtils {
@@ -38,15 +40,24 @@ public class AuthTokenUtils {
     // Algoritam za potpisivanje JWT
     private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
 
+    public String generateToken(User user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("sub", user.getUsername());
+        claims.put("role", user.getAuthorities());
+        claims.put("firstName", user.getFirstName());
+        claims.put("lastName", user.getLastName());
+        claims.put("id", user.getId());
+        return this.generateToken(claims);
+    }
+
     // Funkcija za generisanje JWT token
-    public String generateToken(String username) {
+    public String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
                 .setIssuer(APP_NAME)
-                .setSubject(username)
                 .setAudience(generateAudience())
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
-                // .claim("key", value) //moguce je postavljanje proizvoljnih podataka u telo JWT tokena
+                .setClaims(claims) //moguce je postavljanje proizvoljnih podataka u telo JWT tokena
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
     }
 
