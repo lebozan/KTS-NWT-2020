@@ -14,6 +14,6 @@ public class CulturalOfferConstants {
     public static final long NEW_COFFER_ID= 107;
     public static final String NEW_COFFER_NAME = "Exit Festival";
     public static final String NEW_COFFER_DESCRIPTION = "Novi opis";
-    public static final long DELETABLE_COFFER_ID = 102;
+    public static final long DELETABLE_COFFER_ID = 103;
 
 }

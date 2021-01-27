@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -81,7 +82,13 @@ class CulturalOfferSubtypeServiceIntegrationTest {
 
     @Test
     @Rollback
-    void testDelete() throws Exception {
-        culturalOfferSubtypeService.delete(EXISTING_SUBTYPE_ID);
+    void testDelete() {
+        assertDoesNotThrow(() -> {culturalOfferSubtypeService.delete(EXISTING_SUBTYPE_ID_DELETE);});
+    }
+
+    @Test
+    @Rollback
+    void testDeleteThrowsError() {
+        assertThrows(DataIntegrityViolationException.class, () -> {culturalOfferSubtypeService.delete(EXISTING_SUBTYPE_ID);});
     }
 }

@@ -1,0 +1,34 @@
+<mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let subtype of culturalOfferSubtypes">
+        <div class="type-name">{{subtype.name}}</div>
+        <button mat-button (click)="deleteSubtype(subtype.id)">
+            Delete
+        </button>
+        <button mat-button (click)="editSubtypeName(subtype.id)">
+            Edit
+        </button>
+        <form [formGroup]="formEdit" *ngIf="isEditing === subtype.id">
+            <mat-form-field class="example-full-width">
+                <mat-label>Change subtype name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <button mat-raised-button *ngIf="isEditing === subtype.id" (click)="submitSubtypeNameChange(subtype.id)">Submit</button>
+        </form>
+
+    </mat-list-item>
+</mat-list>
+<form [formGroup]="formNew">
+    <mat-form-field class="example-full-width">
+        <mat-label>New subtype name</mat-label>
+        <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Select type</mat-label>
+        <mat-select formControlName="type">
+            <mat-option *ngFor="let type of culturalOfferTypes" [value]="type.name">
+                {{type.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button mat-raised-button (click)="addNewSubtype()">Submit</button>
+</form>

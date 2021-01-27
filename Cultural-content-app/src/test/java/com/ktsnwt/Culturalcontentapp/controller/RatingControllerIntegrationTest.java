@@ -8,6 +8,8 @@ import com.ktsnwt.Culturalcontentapp.helper.CulturalOfferTypePageImpl;
 import com.ktsnwt.Culturalcontentapp.helper.RatingPageImpl;
 import com.ktsnwt.Culturalcontentapp.model.Rating;
 import com.ktsnwt.Culturalcontentapp.service.RatingService;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,14 +146,13 @@ class RatingControllerIntegrationTest {
     @Test
     void testUpdateComment() {
 
-        login(USER_EMAIL2, USER_PASSWORD2);
+        login(USER_EMAIL1, USER_PASSWORD1);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", accessToken);
 
-        RatingDTO updateDTO = new RatingDTO();
-        updateDTO.setComment(EXISTING_RATING_COMMENT_UPDATE2);
-        updateDTO.setRatingValue(EXISTING_RATING_VALUE_UPDATE);
-        HttpEntity<Object> httpEntity = new HttpEntity<>(updateDTO, headers);
+        NewComment newComment = new NewComment();
+        newComment.setNewComment(EXISTING_RATING_COMMENT_UPDATE2);
+        HttpEntity<Object> httpEntity = new HttpEntity<>(newComment, headers);
 
         ResponseEntity<RatingDTO> responseEntity =
                 restTemplate.exchange("/api/ratings/100/comment", HttpMethod.PUT, httpEntity, RatingDTO.class);
@@ -178,5 +179,11 @@ class RatingControllerIntegrationTest {
                 restTemplate.exchange("/api/ratings/102", HttpMethod.DELETE, httpEntity, Void.class);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @Data
+    @NoArgsConstructor
+    private static class NewComment {
+        public String newComment;
     }
 }

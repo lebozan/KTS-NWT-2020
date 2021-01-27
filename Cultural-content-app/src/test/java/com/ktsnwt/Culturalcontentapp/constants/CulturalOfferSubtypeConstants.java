@@ -6,6 +6,8 @@ public class CulturalOfferSubtypeConstants {
     public static final long EXISTING_SUBTYPE_ID = 102;
     public static final String EXISTING_SUBTYPE_NAME_UPDATE = "Museum";
 
+    public static final long EXISTING_SUBTYPE_ID_DELETE = 101;
+
     public static final String NEW_SUBTYPE_NAME = "Vasar";
     public static final String NEW_SUBTYPE_TYPE_NAME = "Manifestacija";
 

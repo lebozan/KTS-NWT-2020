@@ -29,6 +29,11 @@ public class UserConstants {
     public static final String USER_PASSWORD2 = "sifra2";
     public static final int USER2_NUMBER_OF_SUBSCRIPTIONS = 0;
 
+    public static final long USER_ID3 = 1003;
+    public static final String USER_EMAIL3 = "user3@mail.com";
+    public static final String USER_PASSWORD3 = "sifra3";
+
+
     public static final int FIND_ALL_NUMBER_OF_USERS = 2;
     public static final int FIND_ALL_USERS_NUMBER_OF_USERS = 2;
 

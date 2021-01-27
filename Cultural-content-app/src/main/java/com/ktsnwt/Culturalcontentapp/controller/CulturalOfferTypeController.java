@@ -43,6 +43,18 @@ public class CulturalOfferTypeController {
         return new ResponseEntity<>(culturalOfferTypeDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ResponseEntity<List<CulturalOfferTypeDTO>> getAllCulturalOfferTypesList() {
+        List<CulturalOfferType> culturalOfferTypes = culturalOfferTypeService.findAll();
+        List<CulturalOfferTypeDTO> culturalOfferTypeDTOS = new ArrayList<>();
+        for (CulturalOfferType type: culturalOfferTypes) {
+            culturalOfferTypeDTOS.add(culturalOfferTypeMapper.toDto(type));
+        }
+
+        return new ResponseEntity<>(culturalOfferTypeDTOS, HttpStatus.OK);
+    }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<CulturalOfferTypeDTO> getCulturalOfferType(@PathVariable Long id) {

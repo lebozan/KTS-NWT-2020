@@ -1,5 +1,6 @@
 package com.ktsnwt.Culturalcontentapp.dto;
 
+import java.util.List;
 import java.util.Set;
 
 import com.ktsnwt.Culturalcontentapp.model.Image;
@@ -23,6 +24,6 @@ public class CulturalOfferDTO {
     private String description;
     private CulturalOfferSubtypeDTO subtype;
     //proveri da li je rating i news ili ratingDTO i newsDTO
-    private Set<Rating> ratings;
-    private Set<News> news;
+    private List<RatingDTO> ratings;
+//    private Set<News> news;
 }

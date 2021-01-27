@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,6 +17,7 @@ public class CulturalOfferTypeService {
     @Autowired
     private CulturalOfferTypeRepository culturalOfferTypeRepository;
 
+    public List<CulturalOfferType> findAll() {return culturalOfferTypeRepository.findAll();}
 
     public Page<CulturalOfferType> findAll(Pageable pageable) {
         return culturalOfferTypeRepository.findAll(pageable);
