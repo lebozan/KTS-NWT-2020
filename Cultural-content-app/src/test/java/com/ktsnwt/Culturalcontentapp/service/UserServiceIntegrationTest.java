@@ -124,6 +124,6 @@ class UserServiceIntegrationTest {
 
     @Test
     void delete() {
-
+        assertDoesNotThrow(() -> {userService.delete(1004L);});
     }
 }

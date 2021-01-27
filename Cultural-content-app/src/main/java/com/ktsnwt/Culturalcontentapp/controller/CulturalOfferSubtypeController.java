@@ -22,6 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/cultural-offer-subtypes")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class CulturalOfferSubtypeController {
 
     @Autowired
@@ -46,6 +47,18 @@ public class CulturalOfferSubtypeController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ResponseEntity<List<CulturalOfferSubtypeDTO>> getAllCulturalOfferSubtypesList() {
+        List<CulturalOfferSubtype> culturalOfferSubtypes = culturalOfferSubtypeService.findAll();
+        List<CulturalOfferSubtypeDTO> culturalOfferSubtypeDTOS = new ArrayList<>();
+        for (CulturalOfferSubtype subtype: culturalOfferSubtypes) {
+            culturalOfferSubtypeDTOS.add(culturalOfferSubtypeMapper.toDto(subtype));
+        }
+
+        return new ResponseEntity<>(culturalOfferSubtypeDTOS, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_USER')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<CulturalOfferSubtypeDTO> getCulturalOfferSubtype(@PathVariable Long id) {
         Optional<CulturalOfferSubtype> culturalOfferSubtype = culturalOfferSubtypeService.findById(id);

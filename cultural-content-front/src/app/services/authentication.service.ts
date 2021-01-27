@@ -22,7 +22,7 @@ export class AuthenticationService {
 
     logout(): void {
         localStorage.clear();
-        this.router.navigate(['/']);
+        this.router.navigate(['login']);
 
     }
 

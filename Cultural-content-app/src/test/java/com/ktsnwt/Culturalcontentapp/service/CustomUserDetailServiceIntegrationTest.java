@@ -61,11 +61,11 @@ class CustomUserDetailServiceIntegrationTest {
     @Test
     void changePassword() {
         Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(USER_EMAIL1, USER_PASSWORD1));
+                .authenticate(new UsernamePasswordAuthenticationToken(USER_EMAIL3, USER_PASSWORD3));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
 
-        assertDoesNotThrow(() -> {customUserDetailService.changePassword(USER_PASSWORD1, USER1_PASSWORD_CHANGE);});
+        assertDoesNotThrow(() -> {customUserDetailService.changePassword(USER_PASSWORD3, USER1_PASSWORD_CHANGE);});
 
     }
 }

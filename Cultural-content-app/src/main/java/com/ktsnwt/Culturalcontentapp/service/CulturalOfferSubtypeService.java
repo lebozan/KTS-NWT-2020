@@ -22,6 +22,8 @@ public class CulturalOfferSubtypeService {
         return culturalOfferSubtypeRepository.findAll(pageable);
     }
 
+    public List<CulturalOfferSubtype> findAll() { return culturalOfferSubtypeRepository.findAll(); }
+
     public CulturalOfferSubtype findByName(String name) {
         return culturalOfferSubtypeRepository.findByName(name);
     }

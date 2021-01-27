@@ -17,9 +17,9 @@ class CurrentUser {
 }
 
 @Component({
-  selector: 'app-user-page',
-  templateUrl: './user-page.component.html',
-  styleUrls: ['./user-page.component.scss'],
+    selector: 'app-user-page',
+    templateUrl: './user-page.component.html',
+    styleUrls: ['./user-page.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class UserPageComponent implements OnInit {

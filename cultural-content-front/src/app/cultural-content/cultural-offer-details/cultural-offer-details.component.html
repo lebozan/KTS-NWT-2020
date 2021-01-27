@@ -1,0 +1,17 @@
+<mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile>
+        <mat-list class="details-list">
+            <h1 *ngIf="culturalOffer">{{culturalOffer.name}}</h1>
+            <mat-list-item *ngIf="culturalOffer"> {{culturalOffer.description}}</mat-list-item>
+        </mat-list>
+        <bar-rating [(rate)]="rate" theme="'stars" [max]="5"></bar-rating>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <mat-list class="comments">
+            <h2>Comments about cultural offer</h2>
+            <mat-list-item *ngFor="let rating of ratings">
+                {{rating.user.firstName + ' ' + rating.user.lastName}}: {{rating.comment}}
+            </mat-list-item>
+        </mat-list>
+    </mat-grid-tile>
+</mat-grid-list>

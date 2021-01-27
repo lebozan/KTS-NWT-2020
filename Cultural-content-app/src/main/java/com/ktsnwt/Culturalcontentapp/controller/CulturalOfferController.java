@@ -2,6 +2,7 @@ package com.ktsnwt.Culturalcontentapp.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.ktsnwt.Culturalcontentapp.dto.CulturalOfferDTO;
 import com.ktsnwt.Culturalcontentapp.helper.CulturalOfferMapper;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,7 @@ public class CulturalOfferController {
         this.culturalOfferMapper = new CulturalOfferMapper();
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CulturalOfferDTO>> getAllCulturalOffers() {
         List<CulturalOffer> culturalOffers = culturalOfferService.findAll();
@@ -42,13 +45,13 @@ public class CulturalOfferController {
         return new ResponseEntity<>(culturalOfferDTOS, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    public ResponseEntity<CulturalOfferDTO> getCulturalOffer(@PathVariable String name) {
-        CulturalOffer culturalOffer = culturalOfferService.findByName(name);
-        if (culturalOffer == null) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<CulturalOfferDTO> getCulturalOffer(@PathVariable Long id) {
+        Optional<CulturalOffer> culturalOffer = culturalOfferService.findOne(id);
+        if (culturalOffer.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(culturalOfferMapper.toDto(culturalOffer), HttpStatus.OK);
+        return new ResponseEntity<>(culturalOfferMapper.toDto(culturalOffer.get()), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
