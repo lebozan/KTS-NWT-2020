@@ -24,7 +24,7 @@ export class RoleGuard implements CanActivate {
         const info = jwt.decodeToken(token);
         const roles: string[] = expectedRoles.split('|', 2);
         if (roles.indexOf(info.role[0].authority) === -1) {
-            this.router.navigate(['/user/details']);
+            this.router.navigate(['/']);
             return false;
         }
         return true;

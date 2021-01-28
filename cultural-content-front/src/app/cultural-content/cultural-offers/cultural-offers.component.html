@@ -9,5 +9,6 @@
     </mat-card-content>
     <mat-card-actions>
         <button mat-button [routerLink]="['/cultural-offer-details', {offerId:offer.id}]">View offer</button>
+        <button mat-button (click)="subscribeUser(offer.id)">Subscribe</button>
     </mat-card-actions>
 </mat-card>

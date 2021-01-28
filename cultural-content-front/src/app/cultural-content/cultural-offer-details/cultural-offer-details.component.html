@@ -3,8 +3,13 @@
         <mat-list class="details-list">
             <h1 *ngIf="culturalOffer">{{culturalOffer.name}}</h1>
             <mat-list-item *ngIf="culturalOffer"> {{culturalOffer.description}}</mat-list-item>
+            <mat-list-item>
+                Rating:
+                <mat-slider color="primary" min="0" max="5" step="1" [(value)]="rate" thumbLabel="true"></mat-slider>
+                {{rate}}
+            </mat-list-item>
         </mat-list>
-        <bar-rating [(rate)]="rate" theme="'stars" [max]="5"></bar-rating>
+
     </mat-grid-tile>
     <mat-grid-tile>
         <mat-list class="comments">
@@ -12,6 +17,14 @@
             <mat-list-item *ngFor="let rating of ratings">
                 {{rating.user.firstName + ' ' + rating.user.lastName}}: {{rating.comment}}
             </mat-list-item>
+            <form [formGroup]="commentForm">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Leave a comment</mat-label>
+                    <textarea matInput formControlName="comment" placeholder="Ex. I had a great time..."></textarea>
+                </mat-form-field>
+                <button mat-raised-button (click)="submitNewComment()">Submit</button>
+            </form>
+
         </mat-list>
     </mat-grid-tile>
 </mat-grid-list>

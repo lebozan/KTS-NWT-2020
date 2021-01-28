@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {CulturalOfferTypeService} from '../../services/cultural-offer-type.service';
 import {CulturalOfferService} from '../../services/cultural-offer.service';
+import {UserService} from '../../services/user.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-cultural-offers',
@@ -12,7 +14,9 @@ export class CulturalOffersComponent implements OnInit {
 
 
     constructor(
-        private culturalOfferService: CulturalOfferService
+        private culturalOfferService: CulturalOfferService,
+        private userService: UserService,
+        private toastr: ToastrService
     ) {
         this.culturalOffers = [];
     }
@@ -27,7 +31,16 @@ export class CulturalOffersComponent implements OnInit {
         );
   }
 
-
+  subscribeUser(offerId: number): void {
+        this.userService.subscribe(offerId).subscribe(
+            result => {
+                this.toastr.success('New subscription added successfully!');
+            },
+            error => {
+                this.toastr.error('Already subscribed!');
+            }
+        );
+  }
 
 
 
